@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app-loove - Inscription</title>
+    <!-- On inclut notre script principal en tant que module pour pouvoir utiliser import/export -->
+    <script type="module" src="../src/app.js" defer></script>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <main>
+      <section id="register-section">
+        <h1>Créer un compte sur app-loove</h1>
+
+        <!-- Zone pour afficher les messages d'erreur ou de succès du serveur -->
+        <div id="form-feedback" aria-live="politesting"></div>
+
+        <form id="register-form">
+          <div>
+            <label for="lastname">Nom :</label>
+            <input type="text" id="lastname" name="lastname" required />
+          </div>
+
+          <div>
+            <label for="firstname">Prénom :</label>
+            <input type="text" id="firstname" name="firstname" required />
+          </div>
+
+          <div>
+            <label for="email">Adresse Email :</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div>
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+
+          <div>
+            <label for="birthdate">Date de naissance :</label>
+            <input type="date" id="birthdate" name="birthdate" required />
+          </div>
+
+          <div>
+            <label for="gender">Je suis :</label>
+            <select id="gender" name="gender" required>
+              <option value="">-- Choisir --</option>
+              <option value="male">Un homme</option>
+              <option value="female">Une femme</option>
+              <option value="other">Autre</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="orientation">Je recherche :</label>
+            <select id="orientation" name="orientation" required>
+              <option value="">-- Choisir --</option>
+              <option value="men">Des hommes</option>
+              <option value="women">Des femmes</option>
+              <option value="everyone">Tout le monde</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="relationship_type">Type de relation :</label>
+            <select id="relationship_type" name="relationship_type" required>
+              <option value="">-- Choisir --</option>
+              <option value="serious">Une relation sérieuse</option>
+              <option value="friendship">De l'amitié</option>
+              <option value="casual">Rencontre éphémère</option>
+            </select>
+          </div>
+
+          <button type="submit">S'inscrire</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

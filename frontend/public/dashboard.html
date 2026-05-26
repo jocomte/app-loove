@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app-loove - Découverte</title>
+    <script type="module" src="../src/app.js" defer></script>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <span id="welcome-user">Mon Profil</span> |
+        <a href="./login.html" id="logout-btn">Déconnexion</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="dashboard-section">
+        <h1>Découvrir des profils</h1>
+
+        <button id="geo-btn">
+          Activer la géolocalisation pour optimiser mes matchs
+        </button>
+        <p id="geo-status"></p>
+
+        <div id="profile-card" style="display: none">
+          <div class="profile-avatar-placeholder">❤️</div>
+
+          <div class="profile-content">
+            <h2 id="profile-name">Prénom, Âge</h2>
+            <span id="profile-distance">À X km de vous</span>
+            <p id="profile-bio">Biographie...</p>
+
+            <div class="actions">
+              <button id="pass-btn">Passer</button>
+              <button id="like-btn">Liker</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="no-profiles" style="display: none">
+          <p>
+            Désolé, aucun profil ne correspond à vos critères autour de vous
+            pour le moment.
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
