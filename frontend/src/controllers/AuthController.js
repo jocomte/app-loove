@@ -58,34 +58,43 @@ export class AuthController {
     });
   }
 
-  initEvents() {
-    // On écoute la soumission du formulaire
-    this.form.addEventListener("submit", async (e) => {
-      e.preventDefault(); // Évite le rechargement de la page natif
+  // Dans frontend/src/controllers/AuthController.js, remplace la méthode initRegisterEvent par celle-ci :
 
-      // Récupération automatique de toutes les données du formulaire
-      const formData = new FormData(this.form);
-      const data = Object.fromEntries(formData.entries());
+  initRegisterEvent() {
+    this.registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(
+        new FormData(this.registerForm).entries(),
+      );
 
       try {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ firstname: data.firstname }),
+        );
         this.feedbackContainer.textContent = "Inscription en cours...";
-        this.feedbackContainer.style.color = "blue";
+        this.feedbackContainer.style.backgroundColor = "#e8f4f8";
+        this.feedbackContainer.style.color = "#2980b9";
 
-        // Appel au modèle
         const response = await this.authModel.registerUser(data);
 
-        // Succès
-        this.feedbackContainer.textContent = response.message;
+        // Affichage du succès stylisé
+        this.feedbackContainer.textContent =
+          response.message + " Redirection...";
         this.feedbackContainer.style.backgroundColor = "#e8f8f5";
         this.feedbackContainer.style.color = "#27ae60";
-        this.feedbackContainer.style.border = "1px solid #a3e4d7";
-        this.form.reset(); // Vide le formulaire
+        this.registerForm.reset();
+
+        // 🚀 REDIRECTION AUTOMATIQUE VERS LE DASHBOARD APRÈS 1.5 SECONDE
+        setTimeout(() => {
+          window.location.href = "./dashboard.html";
+        }, 1500);
       } catch (error) {
-        // Échec (Ex: email déjà pris, format invalide)
+        // Affichage de l'erreur stylisée
         this.feedbackContainer.textContent = error.message;
         this.feedbackContainer.style.backgroundColor = "#fdedec";
         this.feedbackContainer.style.color = "#c0392b";
-        this.feedbackContainer.style.border = "1px solid #f5b7b1";
       }
     });
   }

@@ -5,3 +5,10 @@
 [2026-05-26 09:45:19] [INFO] Utilisateur connecté avec succès : ID 2 (jo300@gmail.com)
 [2026-05-26 10:11:09] [INFO] Utilisateur connecté avec succès : ID 2 (jo300@gmail.com)
 [2026-05-26 10:21:33] [INFO] Utilisateur connecté avec succès : ID 2 (jo300@gmail.com)
+[2026-05-26 11:30:42] [ERROR] Erreur non capturée : Call to undefined method User::emailExists() dans C:\xampp\htdocs\app-loove\backend\controllers\UserController.php à la ligne 34
+[2026-05-26 11:30:46] [ERROR] Erreur non capturée : Call to undefined method User::emailExists() dans C:\xampp\htdocs\app-loove\backend\controllers\UserController.php à la ligne 34
+[2026-05-26 11:33:40] [WARN] Échec d'authentification pour l'email : max@fr.fr
+[2026-05-26 11:40:21] [INFO] Utilisateur connecté avec succès : ID 4 (max@fr.fr)
+[2026-05-26 14:47:10] [INFO] Utilisateur connecté avec succès : ID 7 (ilija@gmail.com)
+[2026-05-26 14:48:36] [INFO] Utilisateur connecté avec succès : ID 7 (ilija@gmail.com)
+[2026-05-26 14:48:50] [INFO] Utilisateur connecté avec succès : ID 2 (jo300@gmail.com)

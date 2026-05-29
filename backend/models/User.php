@@ -5,7 +5,6 @@ class User {
     private $db;
 
     public function __construct() {
-        // On récupère l'instance unique de PDO via notre Singleton
         $this->db = Database::getInstance();
     }
 
@@ -17,8 +16,6 @@ class User {
                 VALUES (:lastname, :firstname, :email, :password, :birthdate, :gender, :orientation, :relationship_type)";
         
         $stmt = $this->db->prepare($sql);
-
-        // Hachage du mot de passe pour la sécurité (obligation RGPD / Sécurité)
         $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
 
         return $stmt->execute([
@@ -36,10 +33,20 @@ class User {
     /**
      * Vérifie si un email existe déjà dans la base
      */
+    public function emailExists($email) {
+        $sql = "SELECT id FROM users WHERE email = :email LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':email' => $email]);
+        return $stmt->fetch() ? true : false;
+    }
+
+    /**
+     * Récupère un utilisateur par son email pour vérifier son mot de passe
+     */
     public function getUserByEmail($email) {
         $sql = "SELECT id, firstname, lastname, password, is_premium, is_active FROM users WHERE email = :email LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':email' => $email]);
         return $stmt->fetch();
     }
-}
+} 
