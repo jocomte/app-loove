@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app-loove - Messagerie</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="module" src="../src/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div
+          class="logo"
+          style="
+            font-weight: 800;
+            font-size: 20px;
+            background: linear-gradient(135deg, #ff5858 0%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          "
+        >
+          ❤️ app-loove
+        </div>
+        <div>
+          <a
+            href="./dashboard.html"
+            style="margin-right: 20px; color: #7f8c8d; text-decoration: none"
+            >Découverte</a
+          >
+          <a
+            href="./profile.html"
+            style="margin-right: 20px; color: #7f8c8d; text-decoration: none"
+            >Mon Profil</a
+          >
+          <a href="./login.html" id="logout-btn">Déconnexion</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section
+        id="messages-section"
+        style="
+          max-width: 1100px;
+          width: 100%;
+          display: flex;
+          gap: 20px;
+          padding: 20px;
+        "
+      >
+        <article
+          style="
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+          "
+        >
+          <h1>Boîte de réception</h1>
+          <div
+            id="inbox-list"
+            style="display: grid; gap: 10px; margin-top: 20px"
+          ></div>
+        </article>
+
+        <article
+          style="
+            flex: 2;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+          "
+        >
+          <h1 id="conversation-title">Sélectionnez une conversation</h1>
+          <div
+            id="conversation-messages"
+            style="
+              min-height: 300px;
+              display: grid;
+              gap: 10px;
+              margin-top: 20px;
+            "
+          ></div>
+
+          <form
+            id="message-form"
+            style="margin-top: 25px; display: grid; gap: 12px"
+          >
+            <textarea
+              id="message-input"
+              rows="4"
+              placeholder="Écrire un message..."
+              required
+              style="
+                width: 100%;
+                padding: 12px;
+                border-radius: 12px;
+                border: 1px solid #ddd;
+                resize: vertical;
+              "
+            ></textarea>
+            <button type="submit" style="width: auto; align-self: flex-end">
+              Envoyer
+            </button>
+          </form>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

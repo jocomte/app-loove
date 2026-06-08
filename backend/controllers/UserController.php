@@ -8,7 +8,7 @@ class UserController {
         $this->userModel = new User();
     }
 
-    public function register() {
+public function register() {
         // Récupération des données JSON envoyées dans le corps de la requête HTTP
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
@@ -40,15 +40,30 @@ class UserController {
         // 4. Tentative de création
         try {
             if ($this->userModel->create($data)) {
-                http_response_code(200); // Created
+                // 🚀 OUVERTURE DE LA SESSION AUTOMATIQUE APRES INSCRIPTION
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                
+                // Récupération de l'ID généré pour ce nouvel utilisateur
+                $dbInstance = Database::getInstance();
+                $newUserId = $dbInstance->lastInsertId();
+                
+                $_SESSION['user_id'] = $newUserId;
+                $_SESSION['firstname'] = $data['firstname'];
+
+                Logger::log("Nouvel utilisateur inscrit et connecté automatiquement : ID " . $newUserId . " (" . $data['email'] . ")", "INFO");
+
+                http_response_code(200);
                 echo json_encode(["message" => "Inscription réussie !"]);
             } else {
                 http_response_code(500);
                 echo json_encode(["error" => "Une erreur est survenue lors de l'inscription."]);
             }
         } catch (Exception $e) {
+            Logger::log("Erreur lors de l'inscription : " . $e->getMessage(), "ERROR");
             http_response_code(500);
-            echo json_encode(["error" => "Erreur serveur : " . $e->getMessage()]);
+            echo json_encode(["error" => "Erreur serveur lors de la création du compte."]);
         }
     }
     
@@ -102,4 +117,100 @@ public function login() {
         echo json_encode(["error" => "Identifiants incorrects."]);
     }
 }
+/**
+     * Charge les données de l'utilisateur connecté
+     */
+    public function getProfile() {
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            echo json_encode(["error" => "Non autorisé."]);
+            return;
+        }
+
+        try {
+            $user = $this->userModel->getUserById($_SESSION['user_id']);
+            http_response_code(200);
+            echo json_encode(["user" => $user]);
+        } catch (Exception $e) {
+            Logger::log("Erreur chargement profil : " . $e->getMessage(), "ERROR");
+            http_response_code(500);
+            echo json_encode(["error" => "Erreur serveur."]);
+        }
+    }
+
+    /**
+     * Modifie les données de l'utilisateur connecté
+     */
+    public function editProfile() {
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            echo json_encode(["error" => "Non autorisé."]);
+            return;
+        }
+
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        if (empty($data['firstname']) || empty($data['lastname']) || empty($data['relationship_type'])) {
+            http_response_code(400);
+            echo json_encode(["error" => "Champs obligatoires manquants."]);
+            return;
+        }
+
+        try {
+            if ($this->userModel->updateProfile($_SESSION['user_id'], $data)) {
+                Logger::log("Profil mis à jour pour l'utilisateur ID : " . $_SESSION['user_id'], "INFO");
+                http_response_code(200);
+                echo json_encode(["message" => "Profil mis à jour avec succès !"]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "Impossible de mettre à jour le profil."]);
+            }
+        } catch (Exception $e) {
+            Logger::log("Erreur modification profil : " . $e->getMessage(), "ERROR");
+            http_response_code(500);
+            echo json_encode(["error" => "Erreur interne serveur."]);
+        }
+    }
+
+    public function updateLocation() {
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            echo json_encode(["error" => "Non autorisé."]);
+            return;
+        }
+
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        if (!isset($data['latitude']) || !isset($data['longitude'])) {
+            http_response_code(400);
+            echo json_encode(["error" => "Latitude et longitude sont requises."]);
+            return;
+        }
+
+        $latitude = filter_var($data['latitude'], FILTER_VALIDATE_FLOAT);
+        $longitude = filter_var($data['longitude'], FILTER_VALIDATE_FLOAT);
+
+        if ($latitude === false || $longitude === false) {
+            http_response_code(400);
+            echo json_encode(["error" => "Latitude ou longitude invalide."]);
+            return;
+        }
+
+        try {
+            if ($this->userModel->updateLocation($_SESSION['user_id'], $latitude, $longitude)) {
+                Logger::log("Localisation mise à jour pour l'utilisateur ID : " . $_SESSION['user_id'], "INFO");
+                http_response_code(200);
+                echo json_encode(["message" => "Localisation enregistrée."]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "Impossible de mettre à jour la localisation."]);
+            }
+        } catch (Exception $e) {
+            Logger::log("Erreur mise à jour localisation : " . $e->getMessage(), "ERROR");
+            http_response_code(500);
+            echo json_encode(["error" => "Erreur serveur lors de la mise à jour de la localisation."]);
+        }
+    }
 }

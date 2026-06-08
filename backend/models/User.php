@@ -49,4 +49,55 @@ class User {
         $stmt->execute([':email' => $email]);
         return $stmt->fetch();
     }
+    /**
+     * Récupère un utilisateur complet par son ID
+     */
+    public function getUserById($id) {
+        $sql = "SELECT id, firstname, lastname, email, bio, relationship_type, is_premium, latitude, longitude FROM users WHERE id = :id LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    /**
+     * Met à jour les informations de profil d'un utilisateur
+     */
+    public function updateProfile($id, $data) {
+        $fields = [
+            "firstname = :firstname",
+            "lastname = :lastname",
+            "bio = :bio",
+            "relationship_type = :relationship_type",
+        ];
+
+        if (isset($data['latitude']) && isset($data['longitude'])) {
+            $fields[] = "latitude = :latitude";
+            $fields[] = "longitude = :longitude";
+        }
+
+        $sql = "UPDATE users SET " . implode(", ", $fields) . " WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':firstname', htmlspecialchars(strip_tags($data['firstname'])), PDO::PARAM_STR);
+        $stmt->bindValue(':lastname', htmlspecialchars(strip_tags($data['lastname'])), PDO::PARAM_STR);
+        $stmt->bindValue(':bio', isset($data['bio']) ? htmlspecialchars(strip_tags($data['bio'])) : null, PDO::PARAM_STR);
+        $stmt->bindValue(':relationship_type', $data['relationship_type'], PDO::PARAM_STR);
+
+        if (isset($data['latitude']) && isset($data['longitude'])) {
+            $stmt->bindValue(':latitude', $data['latitude'], PDO::PARAM_STR);
+            $stmt->bindValue(':longitude', $data['longitude'], PDO::PARAM_STR);
+        }
+
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function updateLocation($id, $latitude, $longitude) {
+        $sql = "UPDATE users SET latitude = :latitude, longitude = :longitude WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':latitude', $latitude, PDO::PARAM_STR);
+        $stmt->bindValue(':longitude', $longitude, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 } 

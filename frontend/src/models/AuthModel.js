@@ -1,23 +1,28 @@
 // frontend/src/models/AuthModel.js
+import { getApiUrl, fetchWithTimeout } from "../config.js";
 
 export class AuthModel {
   constructor() {
-    this.apiUrl = "http://localhost/app-loove/backend/index.php";
+    this.apiUrl = getApiUrl();
   }
 
   async registerUser(userData) {
     try {
-      const response = await fetch(`${this.apiUrl}?action=register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetchWithTimeout(
+        `${this.apiUrl}?action=register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+          credentials: "include", // 🚀 Transmet les cookies de session pour le smartphone
         },
-        body: JSON.stringify(userData),
-      });
+        15000,
+      );
 
       const result = await response.json();
 
-      // response.ok est vrai pour tous les statuts entre 200 et 299
       if (!response.ok) {
         throw new Error(result.error || "Une erreur est survenue.");
       }
@@ -27,18 +32,24 @@ export class AuthModel {
       throw error;
     }
   }
+
   /**
    * Envoie les données de connexion au serveur
    */
   async loginUser(credentials) {
     try {
-      const response = await fetch(`${this.apiUrl}?action=login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetchWithTimeout(
+        `${this.apiUrl}?action=login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(credentials),
+          credentials: "include", // 🚀 Essentiel pour initialiser le PHPSESSID
         },
-        body: JSON.stringify(credentials),
-      });
+        15000,
+      );
 
       const result = await response.json();
 

@@ -1,4 +1,6 @@
 <?php
+// backend/index.php
+session_start(); // Toujours en ligne 2 !
 // Enregistrement d'un gestionnaire d'exceptions global
 set_exception_handler(function ($exception) {
     // Log l'erreur fatale avec le message, le fichier et la ligne du crash
@@ -9,13 +11,26 @@ set_exception_handler(function ($exception) {
     exit();
 });
 
-// 1. Gestion des en-têtes CORS (indispensable pour que ton JavaScript puisse interroger l'API)
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// Si c'est une requête de vérification OPTIONS (CORS), on arrête là
+
+// Configure les en-têtes CORS pour autoriser les cookies de session
+$allowedOrigins = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://10.45.31.100'
+];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (in_array($origin, $allowedOrigins, true)) {
+    header("Access-Control-Allow-Origin: $origin");
+} else {
+    header("Access-Control-Allow-Origin: http://10.45.31.100");
+}
+header("Access-Control-Allow-Credentials: true"); // 🚀 INDISPENSABLE pour les sessions !
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json; charset=UTF-8");
+
+// Si c'est une requête de pré-vérification (OPTIONS), on s'arrête là
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
@@ -70,7 +85,88 @@ switch ($action) {
             echo json_encode(["error" => "Méthode non autorisée"]);
         }
         break;
+    case 'get-profile':
+            if ($method === 'GET') {
+                $userController = new UserController();
+                $userController->getProfile();
+            } else {
+                http_response_code(405);
+                echo json_encode(["error" => "Méthode non autorisée"]);
+            }
+            break;
 
+        case 'update-profile':
+            if ($method === 'POST') { // Utilisation de POST simulé pour simplifier le Vanilla PHP sans parser de PUT
+                $userController = new UserController();
+                $userController->editProfile();
+            } else {
+                http_response_code(405);
+                echo json_encode(["error" => "Méthode non autorisée"]);
+            }
+            break;
+        case 'update-location':
+            if ($method === 'POST') {
+                $userController = new UserController();
+                $userController->updateLocation();
+            } else {
+                http_response_code(405);
+                echo json_encode(["error" => "Méthode non autorisée"]);
+            }
+            break;
+    case 'interaction':
+        if ($method === 'POST') {
+            $matchController = new MatchController();
+            $matchController->handleInteraction();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode non autorisée"]);
+        }
+        break;
+    case 'upload-photo':
+        if ($method === 'POST') {
+            $photoController = new PhotoController();
+            $photoController->uploadPhoto();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode non autorisée"]);
+        }
+        break;
+    case 'user-photos':
+        if ($method === 'GET') {
+            $photoController = new PhotoController();
+            $photoController->listPhotos();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode non autorisée"]);
+        }
+        break;
+    case 'send-message':
+        if ($method === 'POST') {
+            $messageController = new MessageController();
+            $messageController->sendMessage();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode non autorisée"]);
+        }
+        break;
+    case 'inbox':
+        if ($method === 'GET') {
+            $messageController = new MessageController();
+            $messageController->getInbox();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode non autorisée"]);
+        }
+        break;
+    case 'conversation':
+        if ($method === 'GET') {
+            $messageController = new MessageController();
+            $messageController->getConversation();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode non autorisée"]);
+        }
+        break;
     default:
         http_response_code(404);
         echo json_encode(["error" => "Route non trouvée"]);

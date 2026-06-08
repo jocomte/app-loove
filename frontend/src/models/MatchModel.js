@@ -1,8 +1,9 @@
 // frontend/src/models/MatchModel.js
+import { getApiUrl, fetchWithTimeout } from "../config.js";
 
 export class MatchModel {
   constructor() {
-    this.apiUrl = "http://localhost/app-loove/backend/index.php";
+    this.apiUrl = getApiUrl();
   }
 
   /**
@@ -15,7 +16,14 @@ export class MatchModel {
         url += `&lat=${lat}&lng=${lng}`;
       }
 
-      const response = await fetch(url, { method: "GET" });
+      const response = await fetchWithTimeout(
+        url,
+        {
+          method: "GET",
+          credentials: "include", // 🚀 Maintient l'état connecté lors de la récupération
+        },
+        15000,
+      );
       const result = await response.json();
 
       if (!response.ok) {

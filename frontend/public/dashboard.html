@@ -10,7 +10,8 @@
   <body>
     <header>
       <nav>
-        <span id="welcome-user">Mon Profil</span> |
+        <a href="./profile.html">Profil</a> |
+        <a href="./messages.html">Messages</a> |
         <a href="./login.html" id="logout-btn">Déconnexion</a>
       </nav>
     </header>
@@ -23,6 +24,37 @@
           Activer la géolocalisation pour optimiser mes matchs
         </button>
         <p id="geo-status"></p>
+
+        <div
+          id="manual-location"
+          style="
+            margin-top: 20px;
+            text-align: left;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          <h2 style="font-size: 18px; margin-bottom: 10px">
+            Entrez votre ville
+          </h2>
+          <form id="manual-location-form" style="display: grid; gap: 10px">
+            <input
+              id="city-input"
+              type="text"
+              placeholder="Ex : Paris, Lyon, Marseille..."
+              autocomplete="off"
+              required
+            />
+            <button id="set-location-btn" type="submit" style="width: 100%">
+              Utiliser cette ville
+            </button>
+          </form>
+          <p style="font-size: 13px; color: #7f8c8d; margin-top: 10px">
+            Si le navigateur refuse l'accès à la géolocalisation, saisissez
+            votre ville et le service convertira le nom en coordonnées.
+          </p>
+        </div>
 
         <div id="profile-card" style="display: none">
           <div class="profile-avatar-placeholder">❤️</div>

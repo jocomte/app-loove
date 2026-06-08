@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app-loove - Mon Profil</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="module" src="../src/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div
+          class="logo"
+          style="
+            font-weight: 800;
+            font-size: 20px;
+            background: linear-gradient(135deg, #ff5858 0%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          "
+        >
+          ❤️ app-loove
+        </div>
+        <div>
+          <a
+            href="./dashboard.html"
+            style="margin-right: 20px; color: #7f8c8d; text-decoration: none"
+            >Découverte</a
+          >
+          <a
+            href="./messages.html"
+            style="margin-right: 20px; color: #7f8c8d; text-decoration: none"
+            >Messages</a
+          >
+          <a href="./login.html" id="logout-btn">Déconnexion</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section id="profile-section" style="max-width: 500px">
+        <h1>
+          Mon Profil
+          <span
+            id="premium-badge"
+            style="
+              display: none;
+              font-size: 12px;
+              background: gold;
+              color: black;
+              padding: 2px 8px;
+              border-radius: 10px;
+              margin-left: 10px;
+            "
+            >PRO</span
+          >
+        </h1>
+
+        <div id="form-feedback" aria-live="polite"></div>
+
+        <form id="profile-form">
+          <div>
+            <label for="firstname">Prénom</label>
+            <input type="text" id="firstname" name="firstname" required />
+          </div>
+
+          <div>
+            <label for="lastname">Nom</label>
+            <input type="text" id="lastname" name="lastname" required />
+          </div>
+
+          <div>
+            <label for="bio">Ma Biographie</label>
+            <textarea
+              id="bio"
+              name="bio"
+              rows="4"
+              placeholder="Parlez-nous de vous, de vos passions..."
+              style="
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #eaeded;
+                border-radius: 8px;
+                resize: none;
+              "
+            ></textarea>
+          </div>
+
+          <div>
+            <label for="city">Ville</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              placeholder="Paris, Lyon, Marseille..."
+            />
+            <p style="font-size: 12px; color: #7f8c8d; margin-top: 5px">
+              Saisissez une ville pour mettre à jour votre position.
+            </p>
+          </div>
+
+          <div>
+            <label for="relationship_type">Ce que je recherche</label>
+            <select id="relationship_type" name="relationship_type" required>
+              <option value="serious">Une relation sérieuse</option>
+              <option value="friendship">De l'amitié</option>
+              <option value="casual">Rencontre éphémère</option>
+            </select>
+          </div>
+
+          <button type="submit">Sauvegarder les modifications</button>
+        </form>
+
+        <section id="photo-section" style="margin-top: 40px">
+          <h2>Ajouter une photo</h2>
+          <div
+            id="photo-feedback"
+            aria-live="polite"
+            style="margin-bottom: 10px"
+          ></div>
+          <form id="photo-form">
+            <div>
+              <label for="photo-input">Sélectionnez une image</label>
+              <input
+                type="file"
+                id="photo-input"
+                name="photo"
+                accept="image/*"
+                required
+              />
+            </div>
+            <button type="submit">Téléverser la photo</button>
+          </form>
+
+          <div
+            id="photo-gallery"
+            style="
+              margin-top: 20px;
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+              gap: 12px;
+            "
+          ></div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

@@ -3,8 +3,6 @@
 import { AuthModel } from "../models/AuthModel.js";
 
 export class AuthController {
-  // Mets à jour le constructor et ajoute la logique de login dans frontend/src/controllers/AuthController.js
-
   constructor() {
     this.authModel = new AuthModel();
     this.feedbackContainer = document.getElementById("form-feedback");
@@ -15,24 +13,6 @@ export class AuthController {
 
     if (this.registerForm) this.initRegisterEvent();
     if (this.loginForm) this.initLoginEvent();
-  }
-
-  initRegisterEvent() {
-    this.registerForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const data = Object.fromEntries(
-        new FormData(this.registerForm).entries(),
-      );
-      try {
-        const response = await this.authModel.registerUser(data);
-        this.feedbackContainer.textContent = response.message;
-        this.feedbackContainer.style.color = "green";
-        this.registerForm.reset();
-      } catch (error) {
-        this.feedbackContainer.textContent = error.message;
-        this.feedbackContainer.style.color = "red";
-      }
-    });
   }
 
   initLoginEvent() {
@@ -47,7 +27,7 @@ export class AuthController {
         // Stockage basique de la session côté client
         localStorage.setItem("user", JSON.stringify(response.user));
 
-        // Redirection vers le futur dashboard des matchs après 1 seconde
+        // Redirection vers le dashboard après 1 seconde
         setTimeout(() => {
           window.location.href = "./dashboard.html";
         }, 1000);
@@ -58,8 +38,7 @@ export class AuthController {
     });
   }
 
-  // Dans frontend/src/controllers/AuthController.js, remplace la méthode initRegisterEvent par celle-ci :
-
+  // 📝 Unique méthode d'inscription conservée (la version stylisée avec redirection)
   initRegisterEvent() {
     this.registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -86,7 +65,7 @@ export class AuthController {
         this.feedbackContainer.style.color = "#27ae60";
         this.registerForm.reset();
 
-        // 🚀 REDIRECTION AUTOMATIQUE VERS LE DASHBOARD APRÈS 1.5 SECONDE
+        // 🚀 Redirection automatique vers le Dashboard grâce à la session ouverte par le PHP
         setTimeout(() => {
           window.location.href = "./dashboard.html";
         }, 1500);
