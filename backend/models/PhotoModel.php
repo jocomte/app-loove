@@ -29,7 +29,7 @@ class PhotoModel {
     }
 
     public function getPhotosByUser($userId) {
-        $sql = "SELECT id, url, is_main, created_at FROM photos WHERE user_id = :user_id ORDER BY is_main DESC, created_at DESC";
+        $sql = "SELECT id, url, is_main FROM photos WHERE user_id = :user_id ORDER BY is_main DESC, id DESC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':user_id' => $userId]);
         return $stmt->fetchAll();
@@ -40,5 +40,31 @@ class PhotoModel {
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':user_id' => $userId]);
         return $stmt->fetchColumn();
+    }
+
+    public function getPhotoById($photoId) {
+        $sql = "SELECT id, user_id, url, is_main FROM photos WHERE id = :id LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $photoId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch() ?: null;
+    }
+
+    public function deletePhoto($photoId, $userId) {
+        $sql = "DELETE FROM photos WHERE id = :id AND user_id = :user_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $photoId, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function setMainPhoto($photoId, $userId) {
+        $this->clearMain($userId);
+
+        $sql = "UPDATE photos SET is_main = 1 WHERE id = :id AND user_id = :user_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $photoId, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }

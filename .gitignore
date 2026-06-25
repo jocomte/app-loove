@@ -1,0 +1,11 @@
+# Logs
+backend/logs/*.log
+
+# User Uploads
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# IDE Configs
+.idea/
+.vscode/
+.gemini/

@@ -1,5 +1,5 @@
 // frontend/src/models/PhotoModel.js
-import { getApiUrl, fetchWithTimeout } from "../config.js";
+import { getApiUrl, fetchJson } from "../config.js";
 
 export class PhotoModel {
   constructor() {
@@ -7,35 +7,43 @@ export class PhotoModel {
   }
 
   async uploadPhoto(formData) {
-    const response = await fetchWithTimeout(
-      `${this.apiUrl}?action=upload-photo`,
-      {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      },
-    );
+    const result = await fetchJson(`${this.apiUrl}?action=upload-photo`, {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
 
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.error || "Erreur lors de l'upload de la photo.");
-    }
     return result;
   }
 
   async fetchPhotos() {
-    const response = await fetchWithTimeout(
-      `${this.apiUrl}?action=user-photos`,
-      {
-        method: "GET",
-        credentials: "include",
-      },
-    );
+    const result = await fetchJson(`${this.apiUrl}?action=user-photos`, {
+      method: "GET",
+      credentials: "include",
+    });
 
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.error || "Impossible de charger les photos.");
-    }
     return result.photos;
+  }
+
+  async deletePhoto(photoId) {
+    const result = await fetchJson(`${this.apiUrl}?action=delete-photo`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ photo_id: photoId }),
+      credentials: "include",
+    });
+
+    return result;
+  }
+
+  async setMainPhoto(photoId) {
+    const result = await fetchJson(`${this.apiUrl}?action=set-main-photo`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ photo_id: photoId }),
+      credentials: "include",
+    });
+
+    return result;
   }
 }

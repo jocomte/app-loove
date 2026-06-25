@@ -23,16 +23,8 @@
           ❤️ app-loove
         </div>
         <div>
-          <a
-            href="./dashboard.html"
-            style="margin-right: 20px; color: #7f8c8d; text-decoration: none"
-            >Découverte</a
-          >
-          <a
-            href="./messages.html"
-            style="margin-right: 20px; color: #7f8c8d; text-decoration: none"
-            >Messages</a
-          >
+          <a href="./dashboard.html">Découverte</a>
+          <a href="./messages.html">Messages</a>
           <a href="./login.html" id="logout-btn">Déconnexion</a>
         </div>
       </nav>
@@ -112,38 +104,66 @@
           <button type="submit">Sauvegarder les modifications</button>
         </form>
 
-        <section id="photo-section" style="margin-top: 40px">
-          <h2>Ajouter une photo</h2>
-          <div
-            id="photo-feedback"
-            aria-live="polite"
-            style="margin-bottom: 10px"
-          ></div>
-          <form id="photo-form">
-            <div>
-              <label for="photo-input">Sélectionnez une image</label>
-              <input
-                type="file"
-                id="photo-input"
-                name="photo"
-                accept="image/*"
-                required
-              />
-            </div>
-            <button type="submit">Téléverser la photo</button>
-          </form>
+        <!-- Bouton de Déconnexion visible uniquement sur mobile -->
+        <button type="button" id="mobile-logout-btn" class="btn-delete" style="margin-top: 20px; display: none;">
+          Se déconnecter
+        </button>
 
-          <div
-            id="photo-gallery"
-            style="
-              margin-top: 20px;
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-              gap: 12px;
-            "
-          ></div>
+        <!-- Lien vers l'administration (visible uniquement pour l'admin) -->
+        <div id="admin-link-container" style="display: none; margin-top: 25px; padding: 15px; background: #ffeef2; border-radius: var(--radius-md); border: 1px solid rgba(253,38,125,0.15);">
+          <p style="font-weight: 700; color: #fd267d; margin-bottom: 5px; font-size: 14px; text-align: left;">⚡ Espace Administrateur disponible</p>
+          <a href="./admin.html" style="display: inline-block; background: var(--gradient-primary); color: white; text-decoration: none; padding: 10px 20px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; text-align: center;">Accéder au Panel Admin</a>
+        </div>
+
+        <!-- Visiteurs du profil -->
+        <section id="visitors-section" style="margin-top: 40px; border-top: 1px solid var(--color-border); padding-top: 30px; text-align: left;">
+          <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 10px; color: var(--color-text-dark);">Qui a visité mon profil ?</h2>
+          <div id="visitors-container" style="position: relative; min-height: 120px; margin-top: 15px; width: 100%;">
+            <div id="visitors-list" style="display: grid; gap: 12px; width: 100%;">
+              <!-- Chargé via JS -->
+            </div>
+            
+            <!-- Cache/CTA Premium pour les utilisateurs standard -->
+            <div id="premium-visitors-cta" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: var(--radius-md); padding: 20px; border: 1px dashed var(--color-text-muted);">
+              <p style="font-weight: 700; font-size: 15px; margin-bottom: 5px; color: var(--color-text-dark);">⭐ Offre Premium requise</p>
+              <p style="font-size: 12px; color: var(--color-text-muted); margin-bottom: 15px; max-width: 320px;">Découvrez immédiatement qui consulte votre profil et débloquez les filtres avancés !</p>
+              <a href="./premium.html" style="background: var(--gradient-primary); color: white; text-decoration: none; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; display: inline-block;">Devenir Premium - 9.99€</a>
+            </div>
+          </div>
+        </section>
+
+
+        <section id="photo-section" style="margin-top: 40px">
+          <h2>Mes photos</h2>
+          <div id="photo-feedback" aria-live="polite" style="margin-bottom: 10px"></div>
+          <p style="font-size: 12px; color: #7f8c8d; margin-bottom: 15px; text-align: left;">
+            Gérez vos photos (6 max). La première (grande) sera votre photo principale.
+            Cliquez sur un emplacement vide "+" pour ajouter une photo instantanément.
+          </p>
+
+          <!-- Grille Tinder 3x2 -->
+          <div class="tinder-grid" id="tinder-photo-grid"></div>
+
+          <!-- Input fichier masqué pour l'upload automatique -->
+          <input type="file" id="tinder-photo-input" accept="image/*" style="display: none;" />
         </section>
       </section>
     </main>
+
+    <!-- Barre de Navigation Mobile fixed-bottom -->
+    <div class="mobile-nav">
+      <a href="./dashboard.html" class="mobile-nav-item">
+        <span class="nav-icon">❤️</span>
+        <span class="nav-text">Découverte</span>
+      </a>
+      <a href="./messages.html" class="mobile-nav-item">
+        <span class="nav-icon">💬</span>
+        <span class="nav-text">Messages</span>
+      </a>
+      <a href="./profile.html" class="mobile-nav-item active">
+        <span class="nav-icon">👤</span>
+        <span class="nav-text">Profil</span>
+      </a>
+    </div>
   </body>
 </html>

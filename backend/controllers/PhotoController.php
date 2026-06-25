@@ -95,11 +95,116 @@ class PhotoController {
         }
 
         $photos = $this->photoModel->getPhotosByUser($_SESSION['user_id']);
-        foreach ($photos as &$photo) {
-            $photo['url'] = "/app-loove/backend/uploads/{$photo['filename']}";
-        }
 
         http_response_code(200);
         echo json_encode(["photos" => $photos]);
+    }
+
+    public function deletePhoto() {
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            echo json_encode(["error" => "Non autorisé."]);
+            return;
+        }
+
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        if (empty($data['photo_id'])) {
+            http_response_code(400);
+            echo json_encode(["error" => "ID de photo manquant."]);
+            return;
+        }
+
+        $photoId = intval($data['photo_id']);
+        $userId = $_SESSION['user_id'];
+
+        try {
+            $photo = $this->photoModel->getPhotoById($photoId);
+
+            if (!$photo) {
+                http_response_code(444);
+                echo json_encode(["error" => "Photo introuvable."]);
+                return;
+            }
+
+            if (intval($photo['user_id']) !== $userId) {
+                http_response_code(403);
+                echo json_encode(["error" => "Vous n'avez pas l'autorisation de supprimer cette photo."]);
+                return;
+            }
+
+            // Suppression du fichier physique
+            $filename = basename($photo['url']);
+            $filepath = $this->uploadsDir . $filename;
+            if (file_exists($filepath)) {
+                unlink($filepath);
+            }
+
+            // Suppression en BDD
+            $this->photoModel->deletePhoto($photoId, $userId);
+
+            // Si c'était la photo principale, on en définit une autre si possible
+            if (intval($photo['is_main']) === 1) {
+                $remaining = $this->photoModel->getPhotosByUser($userId);
+                if (count($remaining) > 0) {
+                    $this->photoModel->setMainPhoto($remaining[0]['id'], $userId);
+                }
+            }
+
+            http_response_code(200);
+            echo json_encode(["success" => true, "message" => "Photo supprimée avec succès."]);
+
+        } catch (Exception $e) {
+            Logger::log("Erreur suppression photo : " . $e->getMessage(), "ERROR");
+            http_response_code(500);
+            echo json_encode(["error" => "Erreur serveur lors de la suppression."]);
+        }
+    }
+
+    public function setMainPhoto() {
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            echo json_encode(["error" => "Non autorisé."]);
+            return;
+        }
+
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        if (empty($data['photo_id'])) {
+            http_response_code(400);
+            echo json_encode(["error" => "ID de photo manquant."]);
+            return;
+        }
+
+        $photoId = intval($data['photo_id']);
+        $userId = $_SESSION['user_id'];
+
+        try {
+            $photo = $this->photoModel->getPhotoById($photoId);
+
+            if (!$photo) {
+                http_response_code(404);
+                echo json_encode(["error" => "Photo introuvable."]);
+                return;
+            }
+
+            if (intval($photo['user_id']) !== $userId) {
+                http_response_code(403);
+                echo json_encode(["error" => "Vous n'avez pas l'autorisation de modifier cette photo."]);
+                return;
+            }
+
+            $this->photoModel->setMainPhoto($photoId, $userId);
+
+            http_response_code(200);
+            echo json_encode(["success" => true, "message" => "Photo principale mise à jour avec succès."]);
+
+        } catch (Exception $e) {
+            Logger::log("Erreur définition photo principale : " . $e->getMessage(), "ERROR");
+            http_response_code(500);
+            echo json_encode(["error" => "Erreur serveur lors de la mise à jour."]);
+        }
     }
 }

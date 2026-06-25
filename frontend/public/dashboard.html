@@ -10,9 +10,12 @@
   <body>
     <header>
       <nav>
-        <a href="./profile.html">Profil</a> |
-        <a href="./messages.html">Messages</a> |
-        <a href="./login.html" id="logout-btn">Déconnexion</a>
+        <div class="logo">❤️ app-loove</div>
+        <div>
+          <a href="./profile.html">Mon Profil</a>
+          <a href="./messages.html">Messages</a>
+          <a href="./login.html" id="logout-btn">Déconnexion</a>
+        </div>
       </nav>
     </header>
 
@@ -56,8 +59,60 @@
           </p>
         </div>
 
+        <!-- Filtres Avancés (Premium) -->
+        <div id="advanced-filters" style="position: relative; background: #ffffff; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 20px; margin-top: 25px; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+          <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 15px; color: var(--color-text-dark);">🔍 Filtres de Recherche Avancés</h2>
+          
+          <form id="advanced-filters-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div>
+              <label for="filter-age-min" style="font-size: 11px;">Âge Minimum</label>
+              <input type="number" id="filter-age-min" min="18" max="100" placeholder="18" style="padding: 8px 12px; font-size: 14px;" />
+            </div>
+            <div>
+              <label for="filter-age-max" style="font-size: 11px;">Âge Maximum</label>
+              <input type="number" id="filter-age-max" min="18" max="100" placeholder="99" style="padding: 8px 12px; font-size: 14px;" />
+            </div>
+            <div style="grid-column: span 2;">
+              <label for="filter-relation" style="font-size: 11px;">Type de relation</label>
+              <select id="filter-relation" style="padding: 8px 12px; font-size: 14px;">
+                <option value="">Tous les types</option>
+                <option value="serious">Une relation sérieuse</option>
+                <option value="friendship">De l'amitié</option>
+                <option value="casual">Rencontre éphémère</option>
+              </select>
+            </div>
+            <div style="grid-column: span 2;">
+              <label for="filter-keyword" style="font-size: 11px;">Mot-clé bio / prénom</label>
+              <input type="text" id="filter-keyword" placeholder="Ex: Musique, Sport, Paris..." style="padding: 8px 12px; font-size: 14px;" />
+            </div>
+            <div style="grid-column: span 2;">
+              <button type="submit" style="padding: 10px; font-size: 14px; background: var(--gradient-secondary); box-shadow: none;">Appliquer les filtres</button>
+            </div>
+          </form>
+
+          <!-- Cache lock si non-premium -->
+          <div id="advanced-filters-lock" style="display: flex; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: var(--radius-md); padding: 15px; z-index: 10;">
+            <p style="font-weight: 700; font-size: 14px; margin-bottom: 5px; color: var(--color-text-dark);">⭐ Filtres Avancés (Premium)</p>
+            <p style="font-size: 11px; color: var(--color-text-muted); margin-bottom: 10px; max-width: 250px;">Abonnez-vous pour filtrer les profils par tranche d'âge, type de recherche et mots-clés.</p>
+            <a href="./premium.html" style="background: var(--gradient-primary); color: white; text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; display: inline-block;">S'abonner</a>
+          </div>
+        </div>
+
         <div id="profile-card" style="display: none">
-          <div class="profile-avatar-placeholder">❤️</div>
+          <div id="profile-avatar" style="position: relative">
+            <img
+              id="profile-photo"
+              class="profile-photo"
+              alt="Photo de profil"
+              style="display: none"
+            />
+            <div
+              class="profile-avatar-placeholder"
+              id="profile-avatar-placeholder"
+            >
+              ❤️
+            </div>
+          </div>
 
           <div class="profile-content">
             <h2 id="profile-name">Prénom, Âge</h2>
@@ -68,6 +123,7 @@
               <button id="pass-btn">Passer</button>
               <button id="like-btn">Liker</button>
             </div>
+            <button id="report-btn" class="btn-delete" style="width: 100%; padding: 10px; font-size: 13px; margin-top: 15px; background: #57606f !important; box-shadow: none; font-weight: 600;">⚠️ Signaler ce profil</button>
           </div>
         </div>
 
@@ -79,5 +135,60 @@
         </div>
       </section>
     </main>
+
+    <!-- Modal de Match Interactif -->
+    <div id="match-modal" class="match-modal-overlay">
+      <div class="match-modal-container">
+        <div class="match-modal-title">C'est un Match !</div>
+        <div class="match-modal-subtitle">Vous et <span id="match-partner-name">quelqu'un</span> vous plaisez mutuellement.</div>
+        
+        <div class="match-avatars-wrapper">
+          <img id="match-avatar-me" class="match-avatar-circle match-avatar-me" src="" alt="Ma photo">
+          <div class="match-heart-divider">❤️</div>
+          <img id="match-avatar-partner" class="match-avatar-circle match-avatar-partner" src="" alt="Photo du match">
+        </div>
+        
+        <div class="match-modal-buttons">
+          <button id="match-chat-btn" class="btn-modal-chat">Envoyer un message</button>
+          <button id="match-close-btn" class="btn-modal-keep">Continuer la découverte</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Barre de Navigation Mobile fixed-bottom -->
+    <div class="mobile-nav">
+      <a href="./dashboard.html" class="mobile-nav-item active">
+        <span class="nav-icon">❤️</span>
+        <span class="nav-text">Découverte</span>
+      </a>
+      <a href="./messages.html" class="mobile-nav-item">
+        <span class="nav-icon">💬</span>
+        <span class="nav-text">Messages</span>
+      </a>
+      <a href="./profile.html" class="mobile-nav-item">
+        <span class="nav-icon">👤</span>
+        <span class="nav-text">Profil</span>
+      </a>
+    </div>
+    <!-- Modal de Signalement -->
+    <div id="report-modal" class="match-modal-overlay" style="background: rgba(15, 32, 39, 0.85);">
+      <div class="match-modal-container" style="max-width: 400px; background: white; padding: 30px; border-radius: var(--radius-lg); border: 1px solid var(--color-border); text-align: left; color: var(--color-text-dark);">
+        <h2 style="font-family: var(--font-title); font-size: 24px; font-weight: 800; color: #ff4757; margin-top: 0; margin-bottom: 10px; border: none; padding: 0;">Signaler ce profil</h2>
+        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px;">Veuillez expliquer brièvement pourquoi vous signalez ce profil. Notre équipe de modération étudiera ce signalement sous 24h.</p>
+        
+        <form id="report-form" style="display: flex; flex-direction: column; gap: 15px;">
+          <div>
+            <label for="report-reason" style="font-size: 12px; font-weight: 700;">Motif du signalement</label>
+            <textarea id="report-reason" rows="4" placeholder="Ex: Contenu inapproprié, harcèlement, faux profil..." required style="border: 2px solid #eaeded; border-radius: 8px; resize: none; margin-top: 5px;"></textarea>
+          </div>
+          
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button type="button" id="report-cancel-btn" style="background: #f1f2f6; color: #57606f; box-shadow: none; flex: 1; padding: 12px;">Annuler</button>
+            <button type="submit" style="background: #ff4757; color: white; box-shadow: 0 4px 12px rgba(255,71,87,0.2); flex: 1; padding: 12px;">Signaler</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

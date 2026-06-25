@@ -25,7 +25,19 @@ class MatchController {
         $lng = isset($_GET['lng']) ? floatval($_GET['lng']) : null;
 
         try {
-            $profile = $this->matchModel->findTargets($_SESSION['user_id'], $lat, $lng);
+            // Vérifier si l'utilisateur est Premium pour appliquer les filtres
+            $userModel = new User();
+            $user = $userModel->getUserById($_SESSION['user_id']);
+            
+            $filters = [];
+            if ($user && $user['is_premium'] == 1) {
+                if (!empty($_GET['age_min'])) $filters['age_min'] = intval($_GET['age_min']);
+                if (!empty($_GET['age_max'])) $filters['age_max'] = intval($_GET['age_max']);
+                if (!empty($_GET['relation'])) $filters['relation'] = $_GET['relation'];
+                if (!empty($_GET['keyword'])) $filters['keyword'] = $_GET['keyword'];
+            }
+
+            $profile = $this->matchModel->findTargets($_SESSION['user_id'], $lat, $lng, $filters);
             
             http_response_code(200);
             echo json_encode(["profile" => $profile ? $profile : null]);
@@ -55,6 +67,12 @@ class MatchController {
         $userId = $_SESSION['user_id'];
         $targetId = intval($data['target_id']);
         $type = $data['type']; // 'like' ou 'pass'
+
+        if (!in_array($type, ['like', 'pass'], true)) {
+            http_response_code(400);
+            echo json_encode(["error" => "Type d'action invalide."]);
+            return;
+        }
 
         try {
             // 1. Enregistrement du choix en BDD

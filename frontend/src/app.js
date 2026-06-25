@@ -4,11 +4,13 @@ import { AuthController } from "./controllers/AuthController.js";
 import { DashboardController } from "./controllers/DashboardController.js";
 import { ProfileController } from "./controllers/ProfileController.js";
 import { MessageController } from "./controllers/MessageController.js";
+import { AdminController } from "./controllers/AdminController.js";
+import { PremiumController } from "./controllers/PremiumController.js";
+import { getApiUrl, fetchJson } from "./config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Application lancée en mode POO/MVC !");
 
-  // 1. On active l'authentification uniquement si on est sur index.html ou login.html
   if (
     document.getElementById("register-form") ||
     document.getElementById("login-form")
@@ -17,21 +19,44 @@ document.addEventListener("DOMContentLoaded", () => {
     new AuthController();
   }
 
-  // 2. On active le dashboard uniquement si on est sur dashboard.html
   if (document.getElementById("dashboard-section")) {
     console.log("-> Mode Dashboard activé");
     new DashboardController();
   }
 
-  // 3. On active le profil uniquement si on est sur profile.html
   if (document.getElementById("profile-form")) {
     console.log("-> Mode Profil activé");
     new ProfileController();
   }
 
-  // 4. On active la messagerie uniquement si on est sur messages.html
   if (document.getElementById("inbox-list")) {
     console.log("-> Mode Messagerie activé");
     new MessageController();
   }
+
+  if (document.getElementById("admin-search-users")) {
+    console.log("-> Mode Admin activé");
+    new AdminController();
+  }
+
+  if (document.getElementById("premium-checkout-section")) {
+    console.log("-> Mode Premium activé");
+    new PremiumController();
+  }
+
+  const logoutButtons = document.querySelectorAll("#logout-btn, #mobile-logout-btn");
+  logoutButtons.forEach((btn) => {
+    btn.addEventListener("click", async (event) => {
+      event.preventDefault();
+      try {
+        await fetchJson(`${getApiUrl()}?action=logout`, {
+          method: "POST",
+          credentials: "include",
+        });
+      } catch (error) {
+        console.warn("Déconnexion impossible :", error);
+      }
+      window.location.href = "./login.html";
+    });
+  });
 });

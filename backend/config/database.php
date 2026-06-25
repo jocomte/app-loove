@@ -17,7 +17,7 @@ class Database {
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Active les erreurs SQL sous forme d'exceptions
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Retourne les données sous forme de tableau associatif
-            PDO::ATTR_EMULATE_PREPARES   => false,                  // Désactive l'émulation pour utiliser de vraies requêtes préparées (sécurité)
+            PDO::ATTR_EMULATE_PREPARES   => true,                  // Active l'émulation pour permettre la réutilisation des paramètres nommés
         ];
 
         try {

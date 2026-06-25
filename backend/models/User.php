@@ -53,7 +53,7 @@ class User {
      * Récupère un utilisateur complet par son ID
      */
     public function getUserById($id) {
-        $sql = "SELECT id, firstname, lastname, email, bio, relationship_type, is_premium, latitude, longitude FROM users WHERE id = :id LIMIT 1";
+        $sql = "SELECT id, firstname, lastname, email, bio, relationship_type, is_premium, is_admin, latitude, longitude FROM users WHERE id = :id LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -97,6 +97,50 @@ class User {
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':latitude', $latitude, PDO::PARAM_STR);
         $stmt->bindValue(':longitude', $longitude, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    /**
+     * Récupère tous les utilisateurs pour l'administration
+     */
+    public function getAllUsers() {
+        $sql = "SELECT id, firstname, lastname, email, birthdate, gender, orientation, relationship_type, is_premium, is_active, is_admin, created_at 
+                FROM users 
+                ORDER BY created_at DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * Supprime définitivement un utilisateur
+     */
+    public function deleteUser($id) {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    /**
+     * Active ou désactive un compte utilisateur (bannissement)
+     */
+    public function updateStatus($id, $isActive) {
+        $sql = "UPDATE users SET is_active = :is_active WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':is_active', $isActive, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    /**
+     * Met à jour le statut Premium d'un utilisateur
+     */
+    public function updatePremium($id, $isPremium) {
+        $sql = "UPDATE users SET is_premium = :is_premium WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':is_premium', $isPremium, PDO::PARAM_INT);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }

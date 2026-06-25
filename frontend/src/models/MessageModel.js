@@ -1,5 +1,5 @@
 // frontend/src/models/MessageModel.js
-import { getApiUrl, fetchWithTimeout } from "../config.js";
+import { getApiUrl, fetchJson } from "../config.js";
 
 export class MessageModel {
   constructor() {
@@ -7,40 +7,27 @@ export class MessageModel {
   }
 
   async sendMessage(receiverId, content) {
-    const response = await fetchWithTimeout(
-      `${this.apiUrl}?action=send-message`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ receiver_id: receiverId, content }),
-      },
-    );
+    const result = await fetchJson(`${this.apiUrl}?action=send-message`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ receiver_id: receiverId, content }),
+    });
 
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.error || "Impossible d'envoyer le message.");
-    }
     return result;
   }
 
   async fetchInbox() {
-    const response = await fetchWithTimeout(`${this.apiUrl}?action=inbox`, {
+    const result = await fetchJson(`${this.apiUrl}?action=inbox`, {
       method: "GET",
       credentials: "include",
     });
 
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(
-        result.error || "Impossible de charger la boîte de réception.",
-      );
-    }
     return result.conversations;
   }
 
   async fetchConversation(targetId) {
-    const response = await fetchWithTimeout(
+    const result = await fetchJson(
       `${this.apiUrl}?action=conversation&target_id=${targetId}`,
       {
         method: "GET",
@@ -48,10 +35,6 @@ export class MessageModel {
       },
     );
 
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.error || "Impossible de charger la conversation.");
-    }
     return result.messages;
   }
 }

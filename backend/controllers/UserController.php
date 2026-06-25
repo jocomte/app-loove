@@ -213,4 +213,61 @@ public function login() {
             echo json_encode(["error" => "Erreur serveur lors de la mise à jour de la localisation."]);
         }
     }
+
+    public function logout() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION = [];
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 3600,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly'],
+            );
+        }
+
+        session_destroy();
+        http_response_code(200);
+        echo json_encode(["message" => "Déconnexion réussie."]);
+    }
+
+    /**
+     * Active le statut premium (appelé après paiement simulé)
+     */
+    public function upgradePremium() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            echo json_encode(["error" => "Non autorisé."]);
+            return;
+        }
+
+        $userId = $_SESSION['user_id'];
+
+        try {
+            if ($this->userModel->updatePremium($userId, 1)) {
+                Logger::log("Utilisateur ID $userId a acheté l'offre Premium", "INFO");
+                http_response_code(200);
+                echo json_encode(["message" => "Félicitations ! Vous êtes maintenant membre Premium."]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "Impossible d'activer l'abonnement Premium."]);
+            }
+        } catch (Exception $e) {
+            Logger::log("Erreur achat premium : " . $e->getMessage(), "ERROR");
+            http_response_code(500);
+            echo json_encode(["error" => "Erreur interne serveur."]);
+        }
+    }
 }

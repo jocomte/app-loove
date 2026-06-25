@@ -43,14 +43,16 @@ class MessageModel {
                     CASE WHEN m.user_one_id = :user_id THEN m.user_two_id ELSE m.user_one_id END AS partner_id,
                     u.firstname,
                     u.lastname,
+                    p.url AS partner_photo,
                     COALESCE(MAX(msg.sent_at), m.created_at) AS last_at,
                     COALESCE(SUM(CASE WHEN msg.sender_id != :user_id AND msg.is_read = 0 THEN 1 ELSE 0 END), 0) AS unread_count
                 FROM matches m
                 JOIN users u ON u.id = CASE WHEN m.user_one_id = :user_id THEN m.user_two_id ELSE m.user_one_id END
+                LEFT JOIN photos p ON p.user_id = u.id AND p.is_main = 1
                 LEFT JOIN messages msg ON msg.match_id = m.id
                 WHERE m.user_one_id = :user_id OR m.user_two_id = :user_id
-                GROUP BY partner_id, u.firstname, u.lastname, m.created_at, m.id
-                ORDER BY last_at DESC";
+                GROUP BY m.id, partner_id, u.firstname, u.lastname, p.url, m.created_at
+                ORDER BY last_at DESC, m.created_at DESC";
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':user_id' => $userId]);

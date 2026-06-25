@@ -10,104 +10,77 @@
   <body>
     <header>
       <nav>
-        <div
-          class="logo"
-          style="
-            font-weight: 800;
-            font-size: 20px;
-            background: linear-gradient(135deg, #ff5858 0%, #f093fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-          "
-        >
-          ❤️ app-loove
-        </div>
+        <div class="logo">❤️ app-loove</div>
         <div>
-          <a
-            href="./dashboard.html"
-            style="margin-right: 20px; color: #7f8c8d; text-decoration: none"
-            >Découverte</a
-          >
-          <a
-            href="./profile.html"
-            style="margin-right: 20px; color: #7f8c8d; text-decoration: none"
-            >Mon Profil</a
-          >
+          <a href="./dashboard.html">Découverte</a>
+          <a href="./profile.html">Mon Profil</a>
           <a href="./login.html" id="logout-btn">Déconnexion</a>
         </div>
       </nav>
     </header>
 
     <main>
-      <section
-        id="messages-section"
-        style="
-          max-width: 1100px;
-          width: 100%;
-          display: flex;
-          gap: 20px;
-          padding: 20px;
-        "
-      >
-        <article
-          style="
-            flex: 1;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 25px;
-          "
-        >
-          <h1>Boîte de réception</h1>
-          <div
-            id="inbox-list"
-            style="display: grid; gap: 10px; margin-top: 20px"
-          ></div>
+      <section id="messages-section">
+        <!-- Panneau de gauche : Liste des conversations -->
+        <article class="inbox-panel">
+          <h1>Discussions</h1>
+          <div id="inbox-list"></div>
         </article>
 
-        <article
-          style="
-            flex: 2;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 25px;
-          "
-        >
-          <h1 id="conversation-title">Sélectionnez une conversation</h1>
-          <div
-            id="conversation-messages"
-            style="
-              min-height: 300px;
-              display: grid;
-              gap: 10px;
-              margin-top: 20px;
-            "
-          ></div>
+        <!-- Panneau de droite : Chat actif -->
+        <article class="chat-panel">
+          <div class="chat-header" style="display: flex; align-items: center; gap: 15px; border-bottom: 1px solid var(--color-border); padding-bottom: 15px; margin-bottom: 15px; width: 100%;">
+            <button type="button" id="chat-back-btn" class="btn-delete" style="width: auto; padding: 8px 16px; margin: 0; display: none;">← Retour</button>
+            <h1 id="conversation-title" style="margin: 0; border: none; padding: 0;">Sélectionnez une conversation</h1>
+            <button type="button" id="chat-report-btn" class="btn-delete" style="width: auto; padding: 8px 16px; margin: 0; margin-left: auto; background: #57606f !important; display: none; box-shadow: none;">⚠️ Signaler</button>
+          </div>
+          <div id="conversation-messages"></div>
 
-          <form
-            id="message-form"
-            style="margin-top: 25px; display: grid; gap: 12px"
-          >
+          <form id="message-form">
             <textarea
               id="message-input"
-              rows="4"
+              rows="2"
               placeholder="Écrire un message..."
               required
-              style="
-                width: 100%;
-                padding: 12px;
-                border-radius: 12px;
-                border: 1px solid #ddd;
-                resize: vertical;
-              "
             ></textarea>
-            <button type="submit" style="width: auto; align-self: flex-end">
-              Envoyer
-            </button>
+            <button type="submit">Envoyer</button>
           </form>
         </article>
-      </section>
     </main>
+
+    <!-- Barre de Navigation Mobile fixed-bottom -->
+    <div class="mobile-nav">
+      <a href="./dashboard.html" class="mobile-nav-item">
+        <span class="nav-icon">❤️</span>
+        <span class="nav-text">Découverte</span>
+      </a>
+      <a href="./messages.html" class="mobile-nav-item active">
+        <span class="nav-icon">💬</span>
+        <span class="nav-text">Messages</span>
+      </a>
+      <a href="./profile.html" class="mobile-nav-item">
+        <span class="nav-icon">👤</span>
+        <span class="nav-text">Profil</span>
+      </a>
+    </div>
+    <!-- Modal de Signalement -->
+    <div id="report-modal" class="match-modal-overlay" style="background: rgba(15, 32, 39, 0.85);">
+      <div class="match-modal-container" style="max-width: 400px; background: white; padding: 30px; border-radius: var(--radius-lg); border: 1px solid var(--color-border); text-align: left; color: var(--color-text-dark);">
+        <h2 style="font-family: var(--font-title); font-size: 24px; font-weight: 800; color: #ff4757; margin-top: 0; margin-bottom: 10px; border: none; padding: 0;">Signaler ce profil</h2>
+        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px;">Veuillez expliquer brièvement pourquoi vous signalez ce correspondant. Notre équipe de modération étudiera ce signalement sous 24h.</p>
+        
+        <form id="report-form" style="display: flex; flex-direction: column; gap: 15px;">
+          <div>
+            <label for="report-reason" style="font-size: 12px; font-weight: 700;">Motif du signalement</label>
+            <textarea id="report-reason" rows="4" placeholder="Ex: Propos injurieux, harcèlement, comportement inapproprié..." required style="border: 2px solid #eaeded; border-radius: 8px; resize: none; margin-top: 5px;"></textarea>
+          </div>
+          
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button type="button" id="report-cancel-btn" style="background: #f1f2f6; color: #57606f; box-shadow: none; flex: 1; padding: 12px;">Annuler</button>
+            <button type="submit" style="background: #ff4757; color: white; box-shadow: 0 4px 12px rgba(255,71,87,0.2); flex: 1; padding: 12px;">Signaler</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

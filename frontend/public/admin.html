@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app-loove - Administration</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="module" src="../src/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">❤️ app-loove <span style="font-size: 12px; background: #fd267d; color: white; padding: 2px 8px; border-radius: 10px; margin-left: 5px;">ADMIN</span></div>
+        <div>
+          <a href="./dashboard.html">Découverte</a>
+          <a href="./messages.html">Messages</a>
+          <a href="./profile.html">Mon Profil</a>
+          <a href="./login.html" id="logout-btn">Déconnexion</a>
+        </div>
+      </nav>
+    </header>
+
+    <main style="max-width: 1200px; margin: 0 auto; width: 100%; display: block; padding: 40px 20px;">
+      <h1 style="text-align: left; margin-bottom: 30px;">Tableau de bord Administrateur</h1>
+
+      <!-- Cartes de statistiques -->
+      <div class="admin-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px;">
+        <div class="stat-card" style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--color-border); text-align: center;">
+          <h3 style="color: var(--color-text-muted); font-size: 13px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">Utilisateurs</h3>
+          <p id="stat-total-users" style="font-size: 32px; font-weight: 800; color: var(--color-text-dark); margin: 0;">-</p>
+        </div>
+        <div class="stat-card" style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--color-border); text-align: center;">
+          <h3 style="color: var(--color-text-muted); font-size: 13px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">Abonnés Premium</h3>
+          <p id="stat-premium-users" style="font-size: 32px; font-weight: 800; color: #f093fb; margin: 0;">-</p>
+        </div>
+        <div class="stat-card" style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--color-border); text-align: center;">
+          <h3 style="color: var(--color-text-muted); font-size: 13px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">Revenus Estimés</h3>
+          <p id="stat-revenue" style="font-size: 32px; font-weight: 800; color: #27ae60; margin: 0;">- €</p>
+        </div>
+        <div class="stat-card" style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--color-border); text-align: center;">
+          <h3 style="color: var(--color-text-muted); font-size: 13px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">Signalements Actifs</h3>
+          <p id="stat-pending-reports" style="font-size: 32px; font-weight: 800; color: #ff4757; margin: 0;">-</p>
+        </div>
+      </div>
+
+      <!-- Sélecteur d'onglets -->
+      <div class="tabs-container" style="display: flex; gap: 10px; border-bottom: 2px solid var(--color-border); padding-bottom: 0; margin-bottom: 30px;">
+        <button type="button" id="tab-users-btn" class="admin-tab active" style="width: auto; padding: 12px 24px; font-size: 15px; background: none; color: var(--color-text-muted); box-shadow: none; border-radius: 8px 8px 0 0; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600;">Utilisateurs</button>
+        <button type="button" id="tab-reports-btn" class="admin-tab" style="width: auto; padding: 12px 24px; font-size: 15px; background: none; color: var(--color-text-muted); box-shadow: none; border-radius: 8px 8px 0 0; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600;">Signalements</button>
+      </div>
+
+      <!-- Feedback de l'action admin -->
+      <div id="form-feedback" aria-live="polite" style="margin-bottom: 20px;"></div>
+
+      <!-- Onglet 1 : Utilisateurs -->
+      <div id="tab-users-content" class="tab-content" style="display: block;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 style="font-size: 20px; margin: 0;">Gestion des Comptes Utilisateurs</h2>
+          <input type="text" id="admin-search-users" placeholder="Rechercher par prénom, nom ou email..." style="max-width: 320px; padding: 10px 15px; font-size: 14px;" />
+        </div>
+
+        <div style="background: white; border-radius: 16px; border: 1px solid var(--color-border); overflow-x: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+            <thead>
+              <tr style="background: #fafbfc; border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">
+                <th style="padding: 18px 20px;">ID</th>
+                <th style="padding: 18px 20px;">Utilisateur</th>
+                <th style="padding: 18px 20px;">Email</th>
+                <th style="padding: 18px 20px;">Genre/Recherche</th>
+                <th style="padding: 18px 20px;">Premium</th>
+                <th style="padding: 18px 20px;">Statut</th>
+                <th style="padding: 18px 20px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-list">
+              <!-- Chargé via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Onglet 2 : Signalements -->
+      <div id="tab-reports-content" class="tab-content" style="display: none;">
+        <h2 style="font-size: 20px; margin-bottom: 20px;">Signalements d'Utilisateurs</h2>
+
+        <div style="background: white; border-radius: 16px; border: 1px solid var(--color-border); overflow-x: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+            <thead>
+              <tr style="background: #fafbfc; border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">
+                <th style="padding: 18px 20px;">Date</th>
+                <th style="padding: 18px 20px;">Signaleur</th>
+                <th style="padding: 18px 20px;">Signalé</th>
+                <th style="padding: 18px 20px;">Motif</th>
+                <th style="padding: 18px 20px;">Statut</th>
+                <th style="padding: 18px 20px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-reports-list">
+              <!-- Chargé via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Barre de Navigation Mobile fixed-bottom (Admin cache ou adapte) -->
+    <div class="mobile-nav">
+      <a href="./dashboard.html" class="mobile-nav-item">
+        <span class="nav-icon">❤️</span>
+        <span class="nav-text">Découverte</span>
+      </a>
+      <a href="./messages.html" class="mobile-nav-item">
+        <span class="nav-icon">💬</span>
+        <span class="nav-text">Messages</span>
+      </a>
+      <a href="./profile.html" class="mobile-nav-item">
+        <span class="nav-icon">👤</span>
+        <span class="nav-text">Profil</span>
+      </a>
+    </div>
+  </body>
+</html>

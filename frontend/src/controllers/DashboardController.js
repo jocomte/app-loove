@@ -1,6 +1,6 @@
 // frontend/src/controllers/DashboardController.js
 
-import { getApiUrl, fetchWithTimeout } from "../config.js";
+import { getApiUrl, fetchJson } from "../config.js";
 import { MatchModel } from "../models/MatchModel.js";
 
 export class DashboardController {
@@ -11,6 +11,10 @@ export class DashboardController {
     this.geoBtn = document.getElementById("geo-btn");
     this.geoStatus = document.getElementById("geo-status");
     this.profileCard = document.getElementById("profile-card");
+    this.profilePhoto = document.getElementById("profile-photo");
+    this.avatarPlaceholder = document.getElementById(
+      "profile-avatar-placeholder",
+    );
     this.profileName = document.getElementById("profile-name");
     this.profileBio = document.getElementById("profile-bio");
     this.profileDistance = document.getElementById("profile-distance");
@@ -18,17 +22,39 @@ export class DashboardController {
     this.manualLocationForm = document.getElementById("manual-location-form");
     this.cityInput = document.getElementById("city-input");
 
-    // 🚀 Boutons d'action ajoutés
+    // Boutons d'action
     this.passBtn = document.getElementById("pass-btn");
     this.likeBtn = document.getElementById("like-btn");
 
+    // Éléments du Modal de Match
+    this.matchModal = document.getElementById("match-modal");
+    this.matchPartnerName = document.getElementById("match-partner-name");
+    this.matchAvatarMe = document.getElementById("match-avatar-me");
+    this.matchAvatarPartner = document.getElementById("match-avatar-partner");
+    this.matchChatBtn = document.getElementById("match-chat-btn");
+    this.matchCloseBtn = document.getElementById("match-close-btn");
+
+    // Éléments de filtres et signalements
+    this.advancedFiltersLock = document.getElementById("advanced-filters-lock");
+    this.advancedFiltersForm = document.getElementById("advanced-filters-form");
+    this.reportBtn = document.getElementById("report-btn");
+    this.reportModal = document.getElementById("report-modal");
+    this.reportForm = document.getElementById("report-form");
+    this.reportCancelBtn = document.getElementById("report-cancel-btn");
+    this.reportReasonInput = document.getElementById("report-reason");
+
     this.latitude = null;
     this.longitude = null;
-    this.currentProfileId = null; // 🚀 Stocke l'ID du profil actuellement affiché
+    this.currentProfileId = null;
+    this.currentProfilePhotoUrl = "";
+    this.currentProfileName = "";
+    this.myAvatarUrl = "";
+    this.isPremiumUser = false;
+    this.activeFilters = {};
 
     if (this.geoBtn) {
       this.initEvents();
-      this.loadProfile();
+      this.fetchMyAvatar().then(() => this.checkPremiumAndLoad());
     }
   }
 
@@ -36,20 +62,23 @@ export class DashboardController {
     // Bouton de géolocalisation
     this.geoBtn.addEventListener("click", () => {
       if (!navigator.geolocation) {
-        this.geoStatus.textContent =
-          "La géolocalisation n'est pas supportée par votre navigateur.";
+        this.showStatus(
+          "La géolocalisation n'est pas supportée par votre navigateur.",
+          "error",
+        );
         return;
       }
 
-      this.geoStatus.textContent = "Recherche de votre position...";
+      this.showStatus("Recherche de votre position...", "info");
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
           this.latitude = position.coords.latitude;
           this.longitude = position.coords.longitude;
-          this.geoStatus.textContent = "Position synchronisée avec succès !";
-          this.geoStatus.style.color = "green";
-          this.saveLocation().finally(() => this.loadProfile());
+          this.showStatus("Position synchronisée avec succès !", "success");
+          this.saveLocation()
+            .then(() => this.loadProfile())
+            .catch(() => this.loadProfile());
         },
         (error) => {
           let message = "Impossible de récupérer votre position.";
@@ -61,20 +90,26 @@ export class DashboardController {
           } else if (error.code === error.TIMEOUT) {
             message = "Le délai de géolocalisation est dépassé. Réessayez.";
           }
-          this.geoStatus.textContent = message;
-          this.geoStatus.style.color = "red";
+          this.showStatus(message, "error");
         },
       );
     });
 
-    // 🚀 Événement sur le bouton PASSER
+    // Événement sur le bouton PASSER
     if (this.passBtn) {
       this.passBtn.addEventListener("click", () => this.handleAction("pass"));
     }
 
-    // 🚀 Événement sur le bouton LIKER
+    // Événement sur le bouton LIKER
     if (this.likeBtn) {
       this.likeBtn.addEventListener("click", () => this.handleAction("like"));
+    }
+
+    // Événement fermeture du Modal de Match
+    if (this.matchCloseBtn) {
+      this.matchCloseBtn.addEventListener("click", () => {
+        this.matchModal.classList.remove("active");
+      });
     }
 
     if (this.manualLocationForm) {
@@ -83,13 +118,11 @@ export class DashboardController {
         const city = this.cityInput.value.trim();
 
         if (!city) {
-          this.geoStatus.textContent = "Veuillez saisir le nom de votre ville.";
-          this.geoStatus.style.color = "red";
+          this.showStatus("Veuillez saisir le nom de votre ville.", "error");
           return;
         }
 
-        this.geoStatus.textContent = "Recherche de la ville... Patientez svp.";
-        this.geoStatus.style.color = "black";
+        this.showStatus("Recherche de la ville... Patientez svp.", "info");
 
         const coordinates =
           this.getCityCoordinates(city.toLowerCase()) ||
@@ -98,16 +131,90 @@ export class DashboardController {
         if (coordinates) {
           this.latitude = coordinates.lat;
           this.longitude = coordinates.lng;
-          this.geoStatus.textContent = `Position définie sur ${coordinates.name}. Chargement des profils...`;
-          this.geoStatus.style.color = "green";
-          this.saveLocation().finally(() => this.loadProfile());
+          this.showStatus(
+            `Position définie sur ${coordinates.name}. Chargement des profils...`,
+            "success",
+          );
+          try {
+            await this.saveLocation();
+          } catch {
+            // On continue même si la sauvegarde a échoué
+          }
+          this.loadProfile();
         } else {
-          this.geoStatus.textContent =
-            "Ville introuvable. Vérifiez l'orthographe ou essayez une autre ville.";
-          this.geoStatus.style.color = "red";
+          this.showStatus(
+            "Ville introuvable. Vérifiez l'orthographe ou essayez une autre ville.",
+            "error",
+          );
         }
       });
     }
+
+    // Filtres avancés
+    if (this.advancedFiltersForm) {
+      this.advancedFiltersForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.activeFilters = {
+          age_min: document.getElementById("filter-age-min").value,
+          age_max: document.getElementById("filter-age-max").value,
+          relation: document.getElementById("filter-relation").value,
+          keyword: document.getElementById("filter-keyword").value
+        };
+        this.loadProfile();
+      });
+    }
+
+    // Bouton de signalement
+    if (this.reportBtn) {
+      this.reportBtn.addEventListener("click", () => {
+        if (this.reportModal) {
+          this.reportModal.classList.add("active");
+        }
+      });
+    }
+
+    // Bouton annuler signalement
+    if (this.reportCancelBtn) {
+      this.reportCancelBtn.addEventListener("click", () => {
+        if (this.reportModal) {
+          this.reportModal.classList.remove("active");
+        }
+      });
+    }
+
+    // Envoi du signalement
+    if (this.reportForm) {
+      this.reportForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const reason = this.reportReasonInput.value.trim();
+        if (!reason || !this.currentProfileId) return;
+
+        try {
+          const res = await fetchJson(`${getApiUrl()}?action=submit-report`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ reported_id: this.currentProfileId, reason: reason }),
+            credentials: "include"
+          });
+
+          alert(res.message);
+          this.reportModal.classList.remove("active");
+          this.reportReasonInput.value = "";
+          
+          // Passer automatiquement
+          this.handleAction("pass");
+        } catch (error) {
+          alert("Erreur de signalement : " + error.message);
+        }
+      });
+    }
+  }
+
+  showStatus(message, type = "info") {
+    if (!this.geoStatus) return;
+    this.geoStatus.textContent = message;
+    this.geoStatus.style.color =
+      type === "success" ? "green" : type === "error" ? "red" : "#34495e";
   }
 
   getCityCoordinates(cityKey) {
@@ -170,50 +277,72 @@ export class DashboardController {
       return;
     }
 
-    const apiUrl = getApiUrl();
     try {
-      const response = await fetchWithTimeout(
-        apiUrl + "?action=update-location",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({
-            latitude: this.latitude,
-            longitude: this.longitude,
-          }),
-        },
-      );
+      await fetchJson(`${getApiUrl()}?action=update-location`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          latitude: this.latitude,
+          longitude: this.longitude,
+        }),
+      });
 
-      const result = await response.json();
-      if (!response.ok) {
-        console.warn("Impossible de sauvegarder la position :", result.error);
-      }
+      this.showStatus("Localisation enregistrée.", "success");
     } catch (error) {
-      console.warn("Erreur lors de la sauvegarde de la position :", error);
+      this.showStatus(error.message, "error");
+      throw error;
     }
   }
 
-  // 🚀 Envoi de l'action au serveur et chargement du profil suivant
   async handleAction(type) {
     if (!this.currentProfileId) return;
 
-    try {
-      // Appel de la méthode créée précédemment dans MatchModel
-      const result = await this.matchModel.sendInteraction(
-        this.currentProfileId,
-        type,
-      );
-
-      if (result.isMatch) {
-        alert("🎉 C'est un MATCH ! Vous pouvez maintenant discuter !");
+    // Déclencher l'animation de swiping CSS
+    if (this.profileCard) {
+      if (type === "like") {
+        this.profileCard.classList.add("swipe-right");
+      } else {
+        this.profileCard.classList.add("swipe-left");
       }
-
-      // On passe immédiatement au profil suivant
-      this.loadProfile();
-    } catch (error) {
-      console.error("Erreur lors de l'interaction :", error);
     }
+
+    // On attend la fin de l'animation de transition avant de requêter et recharger le profil
+    setTimeout(async () => {
+      try {
+        const result = await this.matchModel.sendInteraction(
+          this.currentProfileId,
+          type,
+        );
+
+        if (result.isMatch) {
+          // Afficher le modal de Match personnalisé
+          if (this.matchModal) {
+            if (this.matchPartnerName) this.matchPartnerName.textContent = this.currentProfileName;
+            if (this.matchAvatarPartner) this.matchAvatarPartner.src = this.currentProfilePhotoUrl || "";
+            if (this.matchAvatarMe) this.matchAvatarMe.src = this.myAvatarUrl || "";
+
+            // Lier le clic vers la messagerie avec l'ID du partenaire de match
+            const matchTargetId = this.currentProfileId;
+            if (this.matchChatBtn) {
+              this.matchChatBtn.onclick = () => {
+                window.location.href = `./messages.html?target_id=${matchTargetId}`;
+              };
+            }
+
+            this.matchModal.classList.add("active");
+          }
+        }
+
+        this.loadProfile();
+      } catch (error) {
+        console.error("Erreur lors de l'interaction :", error);
+        this.showStatus("Erreur serveur, réessayez plus tard.", "error");
+        if (this.profileCard) {
+          this.profileCard.classList.remove("swipe-left", "swipe-right");
+        }
+      }
+    }, 400);
   }
 
   async loadProfile() {
@@ -221,10 +350,18 @@ export class DashboardController {
       const profile = await this.matchModel.fetchNextProfile(
         this.latitude,
         this.longitude,
+        this.activeFilters
       );
 
+      // Réinitialiser les animations de swiping si la carte existe
+      if (this.profileCard) {
+        this.profileCard.classList.remove("swipe-left", "swipe-right");
+      }
+
       if (profile) {
-        this.currentProfileId = profile.id; // 🚀 On mémorise l'ID du profil reçu
+        this.currentProfileId = profile.id;
+        this.currentProfilePhotoUrl = profile.photo_url || "";
+        this.currentProfileName = profile.firstname || "";
 
         const age =
           new Date().getFullYear() - new Date(profile.birthdate).getFullYear();
@@ -233,17 +370,86 @@ export class DashboardController {
         this.profileBio.textContent = profile.bio
           ? profile.bio
           : "Aucune description fournie.";
-        this.profileDistance.textContent = `À ${parseFloat(profile.distance).toFixed(1)} km de vous`;
+        this.profileDistance.textContent = profile.distance
+          ? `À ${parseFloat(profile.distance).toFixed(1)} km de vous`
+          : "Distance inconnue";
+
+        if (this.profilePhoto) {
+          if (profile.photo_url) {
+            this.profilePhoto.src = profile.photo_url;
+            this.profilePhoto.style.display = "block";
+            if (this.avatarPlaceholder) {
+              this.avatarPlaceholder.style.display = "none";
+            }
+          } else {
+            this.profilePhoto.style.display = "none";
+            if (this.avatarPlaceholder) {
+              this.avatarPlaceholder.style.display = "flex";
+            }
+          }
+        }
 
         this.noProfilesBlock.style.display = "none";
         this.profileCard.style.display = "block";
+
+        // Enregistrer la visite en arrière-plan
+        this.logVisit(profile.id);
       } else {
         this.currentProfileId = null;
+        this.currentProfilePhotoUrl = "";
+        this.currentProfileName = "";
         this.profileCard.style.display = "none";
         this.noProfilesBlock.style.display = "block";
       }
     } catch (error) {
       console.error(error);
+      this.showStatus("Erreur lors du chargement des profils.", "error");
+    }
+  }
+
+  async fetchMyAvatar() {
+    try {
+      const response = await fetchJson(`${getApiUrl()}?action=user-photos`, {
+        method: "GET",
+        credentials: "include",
+      });
+      if (response && response.photos) {
+        const mainPhoto = response.photos.find((p) => p.is_main == 1);
+        this.myAvatarUrl = mainPhoto ? mainPhoto.url : "";
+      }
+    } catch (error) {
+      console.warn("Impossible de récupérer ma photo de profil:", error);
+    }
+  }
+
+  async checkPremiumAndLoad() {
+    try {
+      const result = await fetchJson(`${getApiUrl()}?action=get-profile`, {
+        method: "GET",
+        credentials: "include"
+      });
+      if (result.user) {
+        this.isPremiumUser = result.user.is_premium == 1;
+        if (this.advancedFiltersLock) {
+          this.advancedFiltersLock.style.display = this.isPremiumUser ? "none" : "flex";
+        }
+      }
+    } catch (error) {
+      console.warn("Impossible de vérifier le statut premium:", error);
+    }
+    this.loadProfile();
+  }
+
+  async logVisit(visitedId) {
+    try {
+      await fetchJson(`${getApiUrl()}?action=log-visit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visited_id: visitedId }),
+        credentials: "include"
+      });
+    } catch (error) {
+      console.warn("Impossible de consigner la visite :", error);
     }
   }
 }
