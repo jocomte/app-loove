@@ -14,8 +14,9 @@ export class MessageController {
     this.messageInput = document.getElementById("message-input");
     
     this.currentTargetId = null;
-    this.pollingInterval = null;
+    this.globalPollingInterval = null;
     this.lastMessagesJson = "";
+    this.lastInboxJson = "";
 
     if (this.inboxList) {
       this.loadInbox().then(() => {
@@ -26,6 +27,7 @@ export class MessageController {
           this.openConversation(parseInt(targetId));
         }
       });
+      this.startGlobalPolling();
     }
 
     if (this.messageForm) {
@@ -44,7 +46,7 @@ export class MessageController {
           await this.loadConversation(this.currentTargetId, false);
           
           // Recharger la boîte de réception pour actualiser le dernier message/ordre
-          this.loadInbox();
+          this.loadInbox(false);
         } catch (error) {
           alert("Erreur lors de l'envoi : " + error.message);
         }
@@ -61,7 +63,6 @@ export class MessageController {
 
     if (backBtn) {
       backBtn.addEventListener("click", () => {
-        this.stopPolling();
         this.currentTargetId = null;
         this.lastMessagesJson = "";
         
@@ -73,7 +74,7 @@ export class MessageController {
           chatReportBtn.style.display = "none";
         }
         
-        this.loadInbox();
+        this.loadInbox(false);
       });
     }
 
@@ -125,9 +126,16 @@ export class MessageController {
   /**
    * Charge la liste des discussions actives à gauche
    */
-  async loadInbox() {
+  async loadInbox(isPolling = false) {
     try {
       const conversations = await this.messageModel.fetchInbox();
+      
+      const inboxJson = JSON.stringify(conversations);
+      if (isPolling && inboxJson === this.lastInboxJson) {
+        return; // Aucun changement, on évite le scintillement du DOM
+      }
+      this.lastInboxJson = inboxJson;
+
       this.inboxList.innerHTML = "";
 
       if (!conversations || conversations.length === 0) {
@@ -177,13 +185,7 @@ export class MessageController {
    */
   async openConversation(targetId) {
     this.currentTargetId = targetId;
-    
-    // Mettre à jour l'état actif dans la liste sans recharger tout le DOM
-    const items = this.inboxList.querySelectorAll(".conversation-item");
-    items.forEach((item, index) => {
-      // On recharge la liste pour être propre ou on toggle juste la classe
-    });
-    this.loadInbox();
+    this.lastMessagesJson = ""; // Force la réactualisation
 
     const messagesSection = document.getElementById("messages-section");
     if (messagesSection) {
@@ -195,14 +197,11 @@ export class MessageController {
       chatReportBtn.style.display = "block";
     }
 
-    // Arrêter le polling précédent s'il y en avait un
-    this.stopPolling();
-
-    // Charger une première fois de manière forcée (sans polling asynchrone)
+    // Charger une première fois immédiatement
     await this.loadConversation(targetId, false);
 
-    // Lancer le polling intelligent toutes les 3 secondes
-    this.startPolling(targetId);
+    // Rafraîchir l'inbox pour actualiser l'indicateur de lecture et la classe active
+    await this.loadInbox(false);
   }
 
   /**
@@ -245,10 +244,10 @@ export class MessageController {
       // Défiler automatiquement vers le bas
       this.conversationMessages.scrollTop = this.conversationMessages.scrollHeight;
 
-      // Si le chargement a lieu suite à du polling, on rafraîchit la boîte de réception à gauche 
+      // Si le chargement a lieu suite à du polling, on rafraîchit la boîte de réception à gauche
       // pour effacer les indicateurs de messages non lus qui viennent d'être ouverts
       if (isPolling) {
-        this.loadInbox();
+        this.loadInbox(true);
       }
     } catch (error) {
       console.error("Erreur de chargement de la conversation :", error);
@@ -259,21 +258,24 @@ export class MessageController {
   }
 
   /**
-   * Démarre le polling automatique
+   * Démarre le polling automatique global (inbox + conversation active)
    */
-  startPolling(targetId) {
-    this.pollingInterval = setInterval(() => {
-      this.loadConversation(targetId, true);
+  startGlobalPolling() {
+    this.globalPollingInterval = setInterval(() => {
+      this.loadInbox(true);
+      if (this.currentTargetId) {
+        this.loadConversation(this.currentTargetId, true);
+      }
     }, 3000);
   }
 
   /**
-   * Arrête le polling automatique
+   * Arrête le polling automatique global
    */
-  stopPolling() {
-    if (this.pollingInterval) {
-      clearInterval(this.pollingInterval);
-      this.pollingInterval = null;
+  stopGlobalPolling() {
+    if (this.globalPollingInterval) {
+      clearInterval(this.globalPollingInterval);
+      this.globalPollingInterval = null;
     }
   }
 }
