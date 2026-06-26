@@ -21,42 +21,48 @@
 
     <main>
       <section id="dashboard-section">
-        <h1>Découvrir des profils</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+          <h1 style="margin: 0; text-align: left;">Découvrir des profils</h1>
+          <button type="button" id="toggle-location-btn" style="width: auto; padding: 8px 16px; font-size: 13px; background: #fafbfc; border: 1px solid var(--color-border); color: var(--color-text-muted); box-shadow: none; border-radius: 20px; cursor: pointer; display: none;">📍 Modifier ma position</button>
+        </div>
 
-        <button id="geo-btn">
-          Activer la géolocalisation pour optimiser mes matchs
-        </button>
-        <p id="geo-status"></p>
+        <!-- Sélecteur de localisation (masqué automatiquement si défini) -->
+        <div id="location-setup-container" style="margin-bottom: 25px;">
+          <button id="geo-btn">
+            Activer la géolocalisation pour optimiser mes matchs
+          </button>
+          <p id="geo-status"></p>
 
-        <div
-          id="manual-location"
-          style="
-            margin-top: 20px;
-            text-align: left;
-            max-width: 420px;
-            margin-left: auto;
-            margin-right: auto;
-          "
-        >
-          <h2 style="font-size: 18px; margin-bottom: 10px">
-            Entrez votre ville
-          </h2>
-          <form id="manual-location-form" style="display: grid; gap: 10px">
-            <input
-              id="city-input"
-              type="text"
-              placeholder="Ex : Paris, Lyon, Marseille..."
-              autocomplete="off"
-              required
-            />
-            <button id="set-location-btn" type="submit" style="width: 100%">
-              Utiliser cette ville
-            </button>
-          </form>
-          <p style="font-size: 13px; color: #7f8c8d; margin-top: 10px">
-            Si le navigateur refuse l'accès à la géolocalisation, saisissez
-            votre ville et le service convertira le nom en coordonnées.
-          </p>
+          <div
+            id="manual-location"
+            style="
+              margin-top: 20px;
+              text-align: left;
+              max-width: 420px;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            <h2 style="font-size: 18px; margin-bottom: 10px">
+              Entrez votre ville
+            </h2>
+            <form id="manual-location-form" style="display: grid; gap: 10px">
+              <input
+                id="city-input"
+                type="text"
+                placeholder="Ex : Paris, Lyon, Marseille..."
+                autocomplete="off"
+                required
+              />
+              <button id="set-location-btn" type="submit" style="width: 100%">
+                Utiliser cette ville
+              </button>
+            </form>
+            <p style="font-size: 13px; color: #7f8c8d; margin-top: 10px">
+              Si le navigateur refuse l'accès à la géolocalisation, saisissez
+              votre ville et le service convertira le nom en coordonnées.
+            </p>
+          </div>
         </div>
 
         <!-- Filtres Avancés (Premium) -->

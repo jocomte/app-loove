@@ -21,6 +21,8 @@ export class DashboardController {
     this.noProfilesBlock = document.getElementById("no-profiles");
     this.manualLocationForm = document.getElementById("manual-location-form");
     this.cityInput = document.getElementById("city-input");
+    this.locationSetupContainer = document.getElementById("location-setup-container");
+    this.toggleLocationBtn = document.getElementById("toggle-location-btn");
 
     // Boutons d'action
     this.passBtn = document.getElementById("pass-btn");
@@ -208,6 +210,19 @@ export class DashboardController {
         }
       });
     }
+
+    if (this.toggleLocationBtn) {
+      this.toggleLocationBtn.addEventListener("click", () => {
+        if (this.locationSetupContainer) {
+          const isHidden = this.locationSetupContainer.style.display === "none";
+          this.locationSetupContainer.style.display = isHidden ? "block" : "none";
+          this.toggleLocationBtn.textContent = isHidden ? "❌ Fermer les réglages" : "📍 Modifier ma position";
+          this.toggleLocationBtn.style.background = isHidden ? "#fdedec" : "#fafbfc";
+          this.toggleLocationBtn.style.color = isHidden ? "#c0392b" : "var(--color-text-muted)";
+          this.toggleLocationBtn.style.borderColor = isHidden ? "#f5b7b1" : "var(--color-border)";
+        }
+      });
+    }
   }
 
   showStatus(message, type = "info") {
@@ -289,6 +304,7 @@ export class DashboardController {
       });
 
       this.showStatus("Localisation enregistrée.", "success");
+      this.hideLocationUI();
     } catch (error) {
       this.showStatus(error.message, "error");
       throw error;
@@ -433,6 +449,11 @@ export class DashboardController {
         if (this.advancedFiltersLock) {
           this.advancedFiltersLock.style.display = this.isPremiumUser ? "none" : "flex";
         }
+        if (result.user.latitude && result.user.longitude) {
+          this.latitude = parseFloat(result.user.latitude);
+          this.longitude = parseFloat(result.user.longitude);
+          this.hideLocationUI();
+        }
       }
     } catch (error) {
       console.warn("Impossible de vérifier le statut premium:", error);
@@ -450,6 +471,19 @@ export class DashboardController {
       });
     } catch (error) {
       console.warn("Impossible de consigner la visite :", error);
+    }
+  }
+
+  hideLocationUI() {
+    if (this.locationSetupContainer) {
+      this.locationSetupContainer.style.display = "none";
+    }
+    if (this.toggleLocationBtn) {
+      this.toggleLocationBtn.style.display = "inline-block";
+      this.toggleLocationBtn.textContent = "📍 Modifier ma position";
+      this.toggleLocationBtn.style.background = "#fafbfc";
+      this.toggleLocationBtn.style.color = "var(--color-text-muted)";
+      this.toggleLocationBtn.style.borderColor = "var(--color-border)";
     }
   }
 }
