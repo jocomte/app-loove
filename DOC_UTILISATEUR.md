@@ -23,19 +23,20 @@ Bienvenue dans la documentation utilisateur officielle de l'application **Loove*
 
 ## 2. Inscription et Connexion
 
-### 🔑 Inscription
-1. Rendez-vous sur la page d'accueil ou d'inscription.
+### 🔑 Inscription et Vérification d'Email
+1. Rendez-vous sur la page d'inscription ([index.html](file:///c:/xampp/htdocs/app-loove/frontend/public/index.html)).
 2. Remplissez le formulaire avec vos informations personnelles :
    - Nom et Prénom
-   - Adresse E-mail (servira d'identifiant)
+   - Adresse E-mail valide (servira d'identifiant)
    - Mot de passe sécurisé
    - Genre et Préférence d'orientation
-   - Date de naissance et Ville
-3. Validez l'inscription. Votre compte est immédiatement actif !
+   - Date de naissance et Type de relation recherchée
+3. **Vérification de sécurité** : À la validation, un **code de vérification à 6 chiffres** est généré et consigné de manière sécurisée dans les logs système. Saisissez ce code à 6 chiffres à l'écran pour valider votre adresse email et activer instantanément votre compte.
 
 ### 🔐 Connexion
 1. Entrez votre email et mot de passe sur la page de connexion ([login.html](file:///c:/xampp/htdocs/app-loove/frontend/public/login.html)).
-2. Une fois authentifié, vous êtes automatiquement redirigé vers votre tableau de bord.
+2. Une fois votre adresse email vérifiée et vos identifiants validés, vous êtes redirigé vers votre tableau de bord.
+
 
 ---
 

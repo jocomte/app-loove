@@ -10,9 +10,11 @@ export class AuthController {
     // Formulaires
     this.registerForm = document.getElementById("register-form");
     this.loginForm = document.getElementById("login-form");
+    this.verifyForm = document.getElementById("verify-form");
 
     if (this.registerForm) this.initRegisterEvent();
     if (this.loginForm) this.initLoginEvent();
+    if (this.verifyForm) this.initVerifyEvent();
   }
 
   initLoginEvent() {
@@ -38,7 +40,7 @@ export class AuthController {
     });
   }
 
-  // 📝 Unique méthode d'inscription conservée (la version stylisée avec redirection)
+  // 📝 Méthode d'inscription avec passage à la vérification d'email
   initRegisterEvent() {
     this.registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -48,27 +50,24 @@ export class AuthController {
       );
 
       try {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ firstname: data.firstname }),
-        );
         this.feedbackContainer.textContent = "Inscription en cours...";
         this.feedbackContainer.style.backgroundColor = "#e8f4f8";
         this.feedbackContainer.style.color = "#2980b9";
 
         const response = await this.authModel.registerUser(data);
 
-        // Affichage du succès stylisé
-        this.feedbackContainer.textContent =
-          response.message + " Redirection...";
-        this.feedbackContainer.style.backgroundColor = "#e8f8f5";
-        this.feedbackContainer.style.color = "#27ae60";
-        this.registerForm.reset();
+        if (response.requires_verification) {
+          // Affichage du panneau de vérification
+          document.getElementById("register-section").style.display = "none";
+          const verifySection = document.getElementById("verification-section");
+          if (verifySection) verifySection.style.display = "block";
 
-        // 🚀 Redirection automatique vers le Dashboard grâce à la session ouverte par le PHP
-        setTimeout(() => {
-          window.location.href = "./dashboard.html";
-        }, 1500);
+          document.getElementById("verify-email").value = response.email;
+          const demoBox = document.getElementById("demo-code-box");
+          if (demoBox && response.dev_code) {
+            demoBox.textContent = `📧 [Mode Démo Soutenance / Logs] Code généré : ${response.dev_code}`;
+          }
+        }
       } catch (error) {
         // Affichage de l'erreur stylisée
         this.feedbackContainer.textContent = error.message;
@@ -77,4 +76,35 @@ export class AuthController {
       }
     });
   }
+
+  initVerifyEvent() {
+    this.verifyForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const feedback = document.getElementById("verify-feedback");
+      const email = document.getElementById("verify-email").value;
+      const code = document.getElementById("verify-code").value;
+
+      try {
+        feedback.textContent = "Vérification en cours...";
+        feedback.style.color = "#2980b9";
+
+        const response = await this.authModel.verifyEmail(email, code);
+
+        feedback.textContent = response.message + " Redirection...";
+        feedback.style.color = "#27ae60";
+
+        if (response.user) {
+          localStorage.setItem("user", JSON.stringify(response.user));
+        }
+
+        setTimeout(() => {
+          window.location.href = "./dashboard.html";
+        }, 1200);
+      } catch (error) {
+        feedback.textContent = error.message;
+        feedback.style.color = "#c0392b";
+      }
+    });
+  }
 }
+

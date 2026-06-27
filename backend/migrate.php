@@ -34,8 +34,18 @@ try {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
     echo "[OK] Table 'visits' validée/créée.\n";
 
+    // 4. Ajouter les colonnes is_verified et verification_code pour la vérification par e-mail
+    $colsVerified = $db->query("SHOW COLUMNS FROM users LIKE 'is_verified'")->fetchAll();
+    if (empty($colsVerified)) {
+        $db->exec("ALTER TABLE users ADD COLUMN is_verified tinyint(1) DEFAULT 1, ADD COLUMN verification_code varchar(10) DEFAULT NULL");
+        echo "[OK] Colonnes 'is_verified' et 'verification_code' ajoutées à la table 'users'.\n";
+    } else {
+        echo "[INFO] Les colonnes 'is_verified' et 'verification_code' existent déjà.\n";
+    }
+
     echo "--- Migration terminée avec succès ! ---\n";
 } catch (Exception $e) {
     echo "[ERREUR] Erreur de migration : " . $e->getMessage() . "\n";
     exit(1);
 }
+

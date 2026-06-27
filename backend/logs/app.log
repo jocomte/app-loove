@@ -42,3 +42,33 @@
 [2026-06-08 10:59:26] [INFO] Localisation mise à jour pour l'utilisateur ID : 2
 [2026-06-08 11:01:06] [INFO] Localisation mise à jour pour l'utilisateur ID : 2
 [2026-06-08 11:01:12] [INFO] Localisation mise à jour pour l'utilisateur ID : 2
+[2026-06-26 14:21:49] [INFO] Utilisateur connecté avec succès : ID 8 (alice@gmail.com)
+[2026-06-26 14:22:27] [INFO] Localisation mise à jour pour l'utilisateur ID : 8
+[2026-06-26 14:22:39] [INFO] Profil mis à jour pour l'utilisateur ID : 8
+[2026-06-26 14:22:42] [INFO] Profil mis à jour pour l'utilisateur ID : 8
+[2026-06-26 14:22:55] [INFO] Profil mis à jour pour l'utilisateur ID : 8
+[2026-06-26 14:22:55] [INFO] Profil mis à jour pour l'utilisateur ID : 8
+[2026-06-26 14:22:55] [INFO] Profil mis à jour pour l'utilisateur ID : 8
+[2026-06-26 14:22:56] [INFO] Profil mis à jour pour l'utilisateur ID : 8
+[2026-06-26 14:24:45] [INFO] Profil mis à jour pour l'utilisateur ID : 8
+[2026-06-26 14:26:44] [INFO] Utilisateur connecté avec succès : ID 1 (jojoco3003@gmail.com)
+[2026-06-26 14:28:23] [INFO] Utilisateur connecté avec succès : ID 6 (sofia@gmail.com)
+[2026-06-26 14:28:32] [INFO] L'utilisateur ID 6 a mis un [like] sur l'ID 7
+[2026-06-26 14:28:48] [INFO] Profil mis à jour pour l'utilisateur ID : 6
+[2026-06-26 14:29:02] [WARN] Utilisateur ID 6 a signalé l'utilisateur ID 1 pour : faux compte
+[2026-06-26 14:29:07] [INFO] L'utilisateur ID 6 a mis un [pass] sur l'ID 1
+[2026-06-26 14:29:11] [INFO] L'utilisateur ID 6 a mis un [like] sur l'ID 5
+[2026-06-26 14:32:41] [INFO] L'utilisateur ID 1 a mis un [like] sur l'ID 6
+[2026-06-28 01:31:12] [INFO] [EMAIL VERIFICATION] Code généré pour test.verify.demo@example.com : 529621 (Mode Démo / Soutenance)
+[2026-06-28 01:31:48] [INFO] Adresse email vérifiée et session ouverte pour : test.verify.demo@example.com
+[2026-06-28 01:32:19] [INFO] Localisation mise à jour pour l'utilisateur ID : 9
+[2026-06-28 01:32:39] [INFO] Profil mis à jour pour l'utilisateur ID : 9
+[2026-06-28 01:32:51] [INFO] Localisation mise à jour pour l'utilisateur ID : 9
+[2026-06-28 01:33:47] [INFO] Profil mis à jour pour l'utilisateur ID : 9
+[2026-06-28 01:34:53] [INFO] Localisation mise à jour pour l'utilisateur ID : 9
+[2026-06-28 01:35:10] [INFO] Localisation mise à jour pour l'utilisateur ID : 9
+[2026-06-28 01:36:18] [INFO] Localisation mise à jour pour l'utilisateur ID : 9
+[2026-06-28 01:37:22] [INFO] Utilisateur connecté avec succès : ID 1 (jojoco3003@gmail.com)
+[2026-06-28 01:37:38] [INFO] Admin a modifié le statut premium de l'utilisateur ID 9 en Premium
+[2026-06-28 01:38:00] [INFO] L'utilisateur ID 9 a mis un [like] sur l'ID 1
+[2026-06-28 01:38:03] [INFO] L'utilisateur ID 9 a mis un [like] sur l'ID 5

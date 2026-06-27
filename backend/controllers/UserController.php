@@ -37,25 +37,22 @@ public function register() {
             return;
         }
 
-        // 4. Tentative de création
+        // 4. Génération du code de vérification à 6 chiffres
+        $verificationCode = str_pad((string)rand(100000, 999999), 6, '0', STR_PAD_LEFT);
+        $data['verification_code'] = $verificationCode;
+
+        // 5. Tentative de création
         try {
             if ($this->userModel->create($data)) {
-                // 🚀 OUVERTURE DE LA SESSION AUTOMATIQUE APRES INSCRIPTION
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
-                }
-                
-                // Récupération de l'ID généré pour ce nouvel utilisateur
-                $dbInstance = Database::getInstance();
-                $newUserId = $dbInstance->lastInsertId();
-                
-                $_SESSION['user_id'] = $newUserId;
-                $_SESSION['firstname'] = $data['firstname'];
-
-                Logger::log("Nouvel utilisateur inscrit et connecté automatiquement : ID " . $newUserId . " (" . $data['email'] . ")", "INFO");
+                Logger::log("[EMAIL VERIFICATION] Code généré pour " . $data['email'] . " : " . $verificationCode . " (Mode Démo / Soutenance)", "INFO");
 
                 http_response_code(200);
-                echo json_encode(["message" => "Inscription réussie !"]);
+                echo json_encode([
+                    "message" => "Inscription réussie ! Un code de vérification à 6 chiffres a été généré.",
+                    "requires_verification" => true,
+                    "email" => $data['email'],
+                    "dev_code" => $verificationCode
+                ]);
             } else {
                 http_response_code(500);
                 echo json_encode(["error" => "Une erreur est survenue lors de l'inscription."]);
@@ -64,6 +61,41 @@ public function register() {
             Logger::log("Erreur lors de l'inscription : " . $e->getMessage(), "ERROR");
             http_response_code(500);
             echo json_encode(["error" => "Erreur serveur lors de la création du compte."]);
+        }
+    }
+
+    public function verifyEmail() {
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        if (empty($data['email']) || empty($data['code'])) {
+            http_response_code(400);
+            echo json_encode(["error" => "Email et code de vérification requis."]);
+            return;
+        }
+
+        $user = $this->userModel->verifyEmailCode($data['email'], $data['code']);
+
+        if ($user) {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['firstname'] = $user['firstname'];
+
+            Logger::log("Adresse email vérifiée et session ouverte pour : " . $data['email'], "INFO");
+
+            http_response_code(200);
+            echo json_encode([
+                "message" => "Email vérifié avec succès ! Bienvenue.",
+                "user" => [
+                    "id" => $user['id'],
+                    "firstname" => $user['firstname']
+                ]
+            ]);
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Code de vérification invalide."]);
         }
     }
     
@@ -88,6 +120,12 @@ public function login() {
             
             http_response_code(403);
             echo json_encode(["error" => "Votre compte a été désactivé par la modération."]);
+            return;
+        }
+
+        if (isset($user['is_verified']) && $user['is_verified'] == 0) {
+            http_response_code(403);
+            echo json_encode(["error" => "Veuillez vérifier votre adresse email avec le code reçu avant de vous connecter."]);
             return;
         }
 

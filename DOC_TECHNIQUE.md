@@ -102,6 +102,8 @@ La base de données relationnelle est conçue pour optimiser les requêtes d'app
 Le fichier [backend/index.php](file:///c:/xampp/htdocs/app-loove/backend/index.php) agit comme un **Front Controller**. Il intercepte toutes les requêtes, configure les en-têtes HTTP/CORS et aiguille le traitement vers le contrôleur approprié en fonction de la variable `action` passée en paramètre GET.
 
 ### Exemple de Routing API :
+- `POST /backend/index.php?action=register` : Inscription initiale et génération du code de vérification à 6 chiffres.
+- `POST /backend/index.php?action=verify_email` : Validation du code de vérification email et activation du compte ([UserController.php](file:///c:/xampp/htdocs/app-loove/backend/controllers/UserController.php)).
 - `GET /backend/index.php?action=users` : Récupération des profils à découvrir ([UserController.php](file:///c:/xampp/htdocs/app-loove/backend/controllers/UserController.php)).
 - `POST /backend/index.php?action=like` : Envoi d'un like et vérification de match ([MatchController.php](file:///c:/xampp/htdocs/app-loove/backend/controllers/MatchController.php)).
 - `GET/POST /backend/index.php?action=messages` : Gestion des échanges de messages ([MessageController.php](file:///c:/xampp/htdocs/app-loove/backend/controllers/MessageController.php)).
@@ -121,6 +123,8 @@ Le client web communique exclusivement avec l'API backend via l'API native `fetc
 ## 7. Sécurité, Sessions et Robustesse
 
 - **Authentification & Sessions** : Utilisation des sessions PHP sécurisées (`session_start()`). En-têtes `Access-Control-Allow-Credentials: true` configurés pour assurer la gestion de session multi-origine sur réseau local et mobile.
+- **Vérification de l'Identité par Email** : Génération d'un code OTP à 6 chiffres (`rand(100000, 999999)`) stocké en base de données avec statut `is_verified = 0`. Le code est consigné dans les logs système via la classe `Logger` (mode démo/soutenance) avant validation.
 - **Protection des mots de passe** : Hachage fort via l'algorithme `password_hash()` (BCrypt).
 - **Protection SQL** : Utilisation systématique de requêtes préparées PDO avec liaison de paramètres (`bindValue` / `bindParam`) pour éliminer tout risque d'injection SQL.
-- **Gestion Globale des Erreurs** : Mise en place d'un `set_exception_handler` global enregistrant les erreurs critiques dans des fichiers de log via la classe `Logger` tout en renvoyant des réponses JSON 500 propres au client.
+- **Gestion Globale des Erreurs & Logs** : Mise en place d'un `set_exception_handler` global enregistrant les erreurs critiques et les événements de sécurité dans des fichiers de log ([app.log](file:///c:/xampp/htdocs/app-loove/backend/logs/app.log)) via la classe `Logger`.
+

@@ -68,6 +68,17 @@ switch ($action) {
         }
         break;
 
+    case 'verify_email':
+        if ($method === 'POST') {
+            $userController = new UserController();
+            $userController->verifyEmail();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode non autorisée"]);
+        }
+        break;
+
+
     case 'login':
         if ($method === 'POST') {
             $userController = new UserController();

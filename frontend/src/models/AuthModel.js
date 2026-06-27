@@ -62,4 +62,35 @@ export class AuthModel {
       throw error;
     }
   }
+
+  /**
+   * Envoie le code de vérification au serveur
+   */
+  async verifyEmail(email, code) {
+    try {
+      const response = await fetchWithTimeout(
+        `${this.apiUrl}?action=verify_email`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, code }),
+          credentials: "include",
+        },
+        15000,
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Code invalide.");
+      }
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
+
