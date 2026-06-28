@@ -34,7 +34,7 @@ L'ensemble des livrables exigés pour l'évaluation et la soutenance du projet s
 ### 3. Lancement de l'application
 1. Placez le dossier `app-loove` dans le répertoire Web de votre serveur (ex: `c:/xampp/htdocs/app-loove`).
 2. Ouvrez votre navigateur et accédez à l'URL :
-   `http://localhost/app-loove/frontend/public/index.html`
+   `http://localhost/app-loove/`
 
 ---
 
