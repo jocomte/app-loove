@@ -2,6 +2,7 @@
 // backend/controllers/MessageController.php
 
 class MessageController {
+require_once __DIR__ . '/../models/User.php';
     private $messageModel;
 
     public function __construct() {
@@ -44,6 +45,30 @@ class MessageController {
             return;
         }
 
+        // Vérifier si l'utilisateur est premium
+        $userModel = new User();
+        $user = $userModel->getUserById($senderId);
+        $isPremium = $user && isset($user['is_premium']) ? $user['is_premium'] : 0;
+
+        $matchId = $this->messageModel->getMatchId($senderId, $receiverId);
+        if (!$matchId) {
+            if ($isPremium) {
+                $result = $this->messageModel->sendPremiumMessage($senderId, $receiverId, $content);
+                if ($result) {
+                    http_response_code(200);
+                    echo json_encode(["success" => true, "message" => "Message premium envoyé avec succès."]);
+                } else {
+                    http_response_code(500);
+                    echo json_encode(["error" => "Erreur lors de l'envoi du message premium."]);
+                }
+                return;
+            }
+            http_response_code(400);
+            echo json_encode(["error" => "Vous ne pouvez envoyer des messages qu'à un match existant."]);
+            return;
+        }
+
+        // Flux normal pour les utilisateurs non premium
         try {
             $result = $this->messageModel->sendMessage($senderId, $receiverId, $content);
             if ($result) {
@@ -51,7 +76,7 @@ class MessageController {
                 echo json_encode(["success" => true, "message" => "Message envoyé avec succès."]);
             } else {
                 http_response_code(400);
-                echo json_encode(["error" => "Vous ne pouvez envoyer des messages qu'à un match existant."]);
+                echo json_encode(["error" => "Impossible d'envoyer le message."]);
             }
         } catch (Exception $e) {
             Logger::log("Erreur envoi message : " . $e->getMessage(), "ERROR");

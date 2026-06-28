@@ -37,6 +37,40 @@ class MessageModel {
         ]);
     }
 
+    /**
+     * Envoie un message premium sans contrainte de match existant.
+     * Crée un match factice si nécessaire puis insère le message.
+     */
+    public function sendPremiumMessage($senderId, $receiverId, $content) {
+        // Vérifier s'il existe déjà un match
+        $matchId = $this->getMatchId($senderId, $receiverId);
+        if (!$matchId) {
+            // Créer un nouveau match
+            $sqlMatch = "INSERT INTO matches (user_one_id, user_two_id) VALUES (:user_one, :user_two)";
+            $stmtMatch = $this->db->prepare($sqlMatch);
+            $stmtMatch->execute([
+                ':user_one' => $senderId,
+                ':user_two' => $receiverId,
+            ]);
+            $matchId = $this->db->lastInsertId();
+        }
+        // Insérer le message avec le matchId obtenu/créé
+        $sql = "INSERT INTO messages (match_id, sender_id, content, is_read, sent_at) VALUES (:match_id, :sender_id, :content, 0, NOW())";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([
+            ':match_id'   => $matchId,
+            ':sender_id'  => $senderId,
+            ':content'    => htmlspecialchars(strip_tags($content)),
+        ]);
+    }
+
+    /**
+     * Envoie un message premium sans exigence de match.
+     * Insère le message avec un match_id factice (0) pour contourner la contrainte.
+     */
+    // Méthode sendPremiumMessage factice supprimée, utilité remplacée par version créant un match si nécessaire.
+
+
     public function getInbox($userId) {
         $sql = "SELECT
                     m.id AS match_id,
