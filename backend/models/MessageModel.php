@@ -8,7 +8,7 @@ class MessageModel {
         $this->db = Database::getInstance();
     }
 
-    private function getMatchId($userId, $partnerId) {
+    public function getMatchId($userId, $partnerId) {
         $sql = "SELECT id FROM matches
                 WHERE (user_one_id = :user_id AND user_two_id = :partner_id)
                    OR (user_one_id = :partner_id AND user_two_id = :user_id)

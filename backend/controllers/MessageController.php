@@ -1,8 +1,9 @@
 <?php
 // backend/controllers/MessageController.php
 
-class MessageController {
 require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/MessageModel.php';
+class MessageController {
     private $messageModel;
 
     public function __construct() {
@@ -49,6 +50,7 @@ require_once __DIR__ . '/../models/User.php';
         $userModel = new User();
         $user = $userModel->getUserById($senderId);
         $isPremium = $user && isset($user['is_premium']) ? $user['is_premium'] : 0;
+error_log("DEBUG: isPremium=$isPremium for user $senderId");
 
         $matchId = $this->messageModel->getMatchId($senderId, $receiverId);
         if (!$matchId) {

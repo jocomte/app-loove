@@ -27,6 +27,7 @@ export class DashboardController {
     // Boutons d'action
     this.passBtn = document.getElementById("pass-btn");
     this.likeBtn = document.getElementById("like-btn");
+    this.msgBtn = document.getElementById("msg-btn");
 
     // Éléments du Modal de Match
     this.matchModal = document.getElementById("match-modal");
@@ -105,6 +106,13 @@ export class DashboardController {
     // Événement sur le bouton LIKER
     if (this.likeBtn) {
       this.likeBtn.addEventListener("click", () => this.handleAction("like"));
+    }
+    if (this.msgBtn) {
+      this.msgBtn.addEventListener("click", () => {
+        if (this.currentProfileId) {
+          window.location.href = `./messages.html?target_id=${this.currentProfileId}`;
+        }
+      });
     }
 
     // Événement fermeture du Modal de Match
@@ -407,6 +415,10 @@ export class DashboardController {
 
         this.noProfilesBlock.style.display = "none";
         this.profileCard.style.display = "block";
+        // Show Message button for premium users
+        if (this.msgBtn) {
+          this.msgBtn.style.display = this.isPremiumUser ? "inline-block" : "none";
+        }
 
         // Enregistrer la visite en arrière-plan
         this.logVisit(profile.id);

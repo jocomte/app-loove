@@ -72,3 +72,130 @@
 [2026-06-28 01:37:38] [INFO] Admin a modifié le statut premium de l'utilisateur ID 9 en Premium
 [2026-06-28 01:38:00] [INFO] L'utilisateur ID 9 a mis un [like] sur l'ID 1
 [2026-06-28 01:38:03] [INFO] L'utilisateur ID 9 a mis un [like] sur l'ID 5
+[2026-06-28 03:00:41] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:00:44] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:00:47] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:00:50] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:00:52] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:03:02] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:04:28] [INFO] [EMAIL VERIFICATION] Code généré pour robert.marie@gmail.com : 548894 (Mode Démo / Soutenance)
+[2026-06-28 03:04:38] [INFO] Adresse email vérifiée et session ouverte pour : robert.marie@gmail.com
+[2026-06-28 03:04:46] [INFO] Localisation mise à jour pour l'utilisateur ID : 10
+[2026-06-28 03:05:47] [INFO] L'utilisateur ID 10 a mis un [like] sur l'ID 7
+[2026-06-28 03:05:48] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:05:50] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:05:53] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:05:56] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:05:59] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:05:59] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:02] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:02] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:05] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:05] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:08] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:08] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:11] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:11] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:14] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:14] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:17] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:17] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:20] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:20] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:23] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:23] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:26] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:26] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:29] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:29] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:32] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:32] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:35] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:35] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:38] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:38] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:41] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:41] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:44] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:44] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:47] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:47] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:50] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:50] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:53] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:53] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:56] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:56] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:59] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:06:59] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:02] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:02] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:05] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:08] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:11] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:14] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:17] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:20] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:23] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:26] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:29] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:31] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:32] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:35] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:38] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:41] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:44] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:47] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:50] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:53] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:56] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:07:59] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:02] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:05] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:08] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:08] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:11] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:14] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:17] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:20] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:23] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:26] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:29] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:31] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:32] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:35] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:38] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:41] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:44] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:47] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:50] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:53] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:56] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:08:59] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:09:02] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:09:05] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:09:08] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:09:11] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:09:14] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:09:17] [ERROR] Erreur non capturée : syntax error, unexpected token "require_once", expecting "function" or "const" dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 5
+[2026-06-28 03:10:51] [INFO] Profil mis à jour pour l'utilisateur ID : 10
+[2026-06-28 03:10:57] [INFO] L'utilisateur ID 10 a mis un [like] sur l'ID 1
+[2026-06-28 03:10:58] [INFO] L'utilisateur ID 10 a mis un [like] sur l'ID 5
+[2026-06-28 03:33:59] [INFO] [EMAIL VERIFICATION] Code généré pour jo30@gmail.com : 703359 (Mode Démo / Soutenance)
+[2026-06-28 03:34:11] [INFO] Adresse email vérifiée et session ouverte pour : jo30@gmail.com
+[2026-06-28 03:34:20] [INFO] Localisation mise à jour pour l'utilisateur ID : 11
+[2026-06-28 03:34:46] [INFO] Profil mis à jour pour l'utilisateur ID : 11
+[2026-06-28 03:42:56] [ERROR] Erreur non capturée : Call to private method MessageModel::getMatchId() from scope MessageController dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 55
+[2026-06-28 03:42:59] [ERROR] Erreur non capturée : Call to private method MessageModel::getMatchId() from scope MessageController dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 55
+[2026-06-28 03:42:59] [ERROR] Erreur non capturée : Call to private method MessageModel::getMatchId() from scope MessageController dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 55
+[2026-06-28 03:43:00] [ERROR] Erreur non capturée : Call to private method MessageModel::getMatchId() from scope MessageController dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 55
+[2026-06-28 03:43:00] [ERROR] Erreur non capturée : Call to private method MessageModel::getMatchId() from scope MessageController dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 55
+[2026-06-28 03:43:03] [ERROR] Erreur non capturée : Call to private method MessageModel::getMatchId() from scope MessageController dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 55
+[2026-06-28 03:43:19] [ERROR] Erreur non capturée : Call to private method MessageModel::getMatchId() from scope MessageController dans C:\xampp\htdocs\app-loove\backend\controllers\MessageController.php à la ligne 55
+[2026-06-28 03:46:23] [INFO] L'utilisateur ID 1 a mis un [like] sur l'ID 9
+[2026-06-28 03:46:23] [INFO] Match créé entre 1 et 9
+[2026-06-28 03:46:23] [INFO] MATCH détecté entre 1 et 9 !
+[2026-06-28 03:46:27] [INFO] L'utilisateur ID 1 a mis un [like] sur l'ID 10
+[2026-06-28 03:46:27] [INFO] Match créé entre 1 et 10
+[2026-06-28 03:46:27] [INFO] MATCH détecté entre 1 et 10 !
+[2026-06-28 03:51:00] [INFO] L'utilisateur ID 10 a mis un [like] sur l'ID 11
