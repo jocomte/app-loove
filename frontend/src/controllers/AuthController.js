@@ -36,6 +36,13 @@ export class AuthController {
       } catch (error) {
         this.feedbackContainer.textContent = error.message;
         this.feedbackContainer.style.color = "red";
+        // Si l'utilisateur doit vérifier son email, afficher le formulaire de vérification
+        if (error.message.includes("Veuillez vérifier votre adresse email")) {
+          const verificationSection = document.getElementById("verification-section");
+          if (verificationSection) verificationSection.style.display = "block";
+          const emailInput = document.getElementById("verify-email");
+          if (emailInput) emailInput.value = document.getElementById("email").value;
+        }
       }
     });
   }
