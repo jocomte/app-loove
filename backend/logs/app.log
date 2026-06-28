@@ -199,3 +199,44 @@
 [2026-06-28 03:46:27] [INFO] Match créé entre 1 et 10
 [2026-06-28 03:46:27] [INFO] MATCH détecté entre 1 et 10 !
 [2026-06-28 03:51:00] [INFO] L'utilisateur ID 10 a mis un [like] sur l'ID 11
+[2026-06-28 14:26:26] [INFO] Utilisateur connecté avec succès : ID 1 (jojoco3003@gmail.com)
+[2026-06-28 14:28:39] [INFO] [EMAIL VERIFICATION] Code généré pour ilocolas21@gmail.com : 334877 (Mode Démo / Soutenance)
+[2026-06-28 14:29:03] [INFO] Admin a modifié le statut premium de l'utilisateur ID 12 en Premium
+[2026-06-28 14:31:16] [INFO] [EMAIL VERIFICATION] Code généré pour ilocolas@gmail.com : 177828 (Mode Démo / Soutenance)
+[2026-06-28 14:32:04] [WARN] Échec d'authentification pour l'email : ilocolas@gmail.com
+[2026-06-28 14:32:11] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:33:55] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:33:57] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:35:31] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:35:34] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:36:02] [INFO] Utilisateur connecté avec succès : ID 10 (robert.marie@gmail.com)
+[2026-06-28 14:36:18] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:36:20] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:36:22] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:36:37] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:36:38] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:36:43] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:36:43] [WARN] Échec d'authentification pour l'email : ilocolas21@gmail.com
+[2026-06-28 14:42:16] [INFO] Utilisateur connecté avec succès : ID 10 (robert.marie@gmail.com)
+[2026-06-28 14:45:18] [INFO] [EMAIL VERIFICATION] Code généré pour vivie2130@gmail.com : 456075 (Mode Démo / Soutenance)
+[2026-06-28 14:45:33] [INFO] Adresse email vérifiée et session ouverte pour : vivie2130@gmail.com
+[2026-06-28 14:46:08] [INFO] Localisation mise à jour pour l'utilisateur ID : 14
+[2026-06-28 20:41:30] [INFO] [EMAIL VERIFICATION] Code généré pour romain.bonnet@gmail.com : 971166 (Mode Démo / Soutenance)
+[2026-06-28 20:41:51] [INFO] Adresse email vérifiée et session ouverte pour : romain.bonnet@gmail.com
+[2026-06-28 20:42:09] [INFO] Localisation mise à jour pour l'utilisateur ID : 15
+[2026-06-28 20:42:37] [INFO] L'utilisateur ID 15 a mis un [like] sur l'ID 2
+[2026-06-28 20:42:40] [INFO] L'utilisateur ID 15 a mis un [like] sur l'ID 9
+[2026-06-28 20:42:42] [INFO] L'utilisateur ID 15 a mis un [like] sur l'ID 10
+[2026-06-28 20:42:45] [INFO] L'utilisateur ID 15 a mis un [like] sur l'ID 12
+[2026-06-28 20:44:27] [INFO] Utilisateur connecté avec succès : ID 1 (jojoco3003@gmail.com)
+[2026-06-28 20:45:22] [INFO] L'utilisateur ID 1 a mis un [like] sur l'ID 12
+[2026-06-28 20:45:25] [INFO] L'utilisateur ID 1 a mis un [like] sur l'ID 13
+[2026-06-28 20:46:38] [INFO] Admin a modifié le statut premium de l'utilisateur ID 15 en Premium
+[2026-06-28 20:46:56] [WARN] Utilisateur ID 15 a signalé l'utilisateur ID 13 pour : nudite
+[2026-06-28 20:46:58] [INFO] L'utilisateur ID 15 a mis un [pass] sur l'ID 13
+[2026-06-29 00:36:52] [WARN] Échec d'authentification pour l'email : jojoco3003@gmail.com
+[2026-06-29 00:37:03] [INFO] Utilisateur connecté avec succès : ID 1 (jojoco3003@gmail.com)
+[2026-06-29 00:42:29] [WARN] Échec d'authentification pour l'email : jojoco3003@gmail.com
+[2026-06-29 00:42:37] [INFO] Utilisateur connecté avec succès : ID 1 (jojoco3003@gmail.com)
+[2026-06-29 00:42:50] [INFO] Localisation mise à jour pour l'utilisateur ID : 1
+[2026-06-29 00:43:04] [INFO] Localisation mise à jour pour l'utilisateur ID : 1
